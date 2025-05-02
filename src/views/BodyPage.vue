@@ -6,6 +6,26 @@
             </div>
             <CatFilter />
             <ImageCarousel />
+            <div class="text-center">
+  <p class="inline-block text-2xl font-medium uppercase tracking-wider border-2 border-black p-3 hover:bg-black hover:text-white transition duration-300 ease-in-out">
+    Shop By Category<i class="pi pi-chevron-right" style="font-size: 1.2rem;"></i>
+  </p>
+</div>
+<div class="banner-discount mt-8 relative">
+        <img
+          class="w-full h-[500px] object-cover object-center p-[1cm] opacity-90"
+          src="/images/Banner-Disc.jpg"
+          alt="Banner Discount"
+        />
+        <div
+          class="absolute inset-0 flex flex-col items-center justify-center uppercase tracking-wider space-y-4"
+        >
+          <p class=" text-white text-3xl font-bold">don't delay; but todya.</p>
+          <p class=" text-white text-5xl font-bold">summer sale</p>
+          <p class="  text-white text-6xl font-bold">50% percents off</p>
+        </div>
+        
+      </div>
         </div>
     </div>
 </template>
