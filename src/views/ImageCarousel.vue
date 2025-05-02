@@ -5,21 +5,21 @@
       :numVisible="numVisible"
       :numScroll="1"
       :responsiveOptions="responsiveOptions"
-      style="padding: 0.7cm 3cm 0cm "
+      style="padding: 0.7cm 3cm 0cm"
       class="custom-carousel"
     >
       <template #item="slotProps">
         <div class="m-4">
           <div class="mb-2">
-            <div class="relative mx-auto">
+            <div class="relative mx-auto group"> <!-- Added group class here -->
               <img
-  :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
-  :alt="slotProps.data.name"
-  class="w-full h-[500px] object-cover"
-  @mouseover="hoveredProduct = slotProps.data.name"
-  @mouseleave="hoveredProduct = null"
-  @error="onImageError"
-/>
+                :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
+                :alt="slotProps.data.name"
+                class="w-full h-[500px] object-cover"
+                @mouseover="hoveredProduct = slotProps.data.name"
+                @mouseleave="hoveredProduct = null"
+                @error="onImageError"
+              />
 
               <Tag
                 :value="''"
@@ -27,12 +27,18 @@
                 class="absolute"
                 style="right: 20px; top: 20px; font-size: 25px; color: white;"
               />
+              <!-- Shop Now Button -->
+              <button
+                class="shop-now-btn absolute bottom-0.5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
+              >
+                Shop Now
+              </button>
             </div>
           </div>
           <div class="mb-1 font-bold uppercase">{{ slotProps.data.name }}</div>
           <div class="">
-            <div class="mt-0  text-lg">
-              ${{ slotProps.data.price }}
+            <div class="mt-0 text-lg">
+              ${{ slotProps.data.price?.toFixed(2) }}
             </div>
             <div class="color-selector mt-2">
               <div
@@ -168,4 +174,16 @@ export default {
 .color-circle.selected {
   border: 5px double white;
 }
+
+.shop-now-btn {
+  background-color: rgba(0, 0, 0, 0.5); /* Lower opacity for better visibility */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0; /* Initially hidden */
+}
+
 </style>
