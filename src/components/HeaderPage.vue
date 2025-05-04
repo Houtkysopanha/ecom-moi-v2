@@ -5,8 +5,9 @@
         <div class="search flex mx-auto flex-wrap items-center justify-between" style="padding: 1cm;">
           <div class="relative hidden md:block">
             <button
-              class="relative flex items-center w-70 h-10 text-sm border-2 border-black px-4"
+              class="relative flex items-center w-[300px] h-10 text-sm border-2 border-black px-4 cursor-pointer"
               style="padding-left: 1cm"
+              @click="showSearchModal = true"
             >
               <div
                 style="padding-left: 0.3cm"
@@ -14,7 +15,7 @@
               >
                 <i class="fa-solid fa-magnifying-glass"></i>
               </div>
-              <span class="text-gray-400">Search for...</span>
+              <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
             </button>
           </div>
           <div class="logo" style="margin-right: 3.5cm">
@@ -37,6 +38,74 @@
   ></i>
 </div>
 
+          </div>
+        </div>
+        <div
+          v-if="showSearchModal"
+          class="fixed inset-0 flex items-start justify-normal bg-white bg-opacity-50 z-50"
+          @click.self="showSearchModal = false"
+        >
+          <div class="bg-white w-full h-[400px]  rounded-lg">
+            <div class="search flex mx-auto flex-wrap items-center justify-between" style="padding: 1cm;">
+          <div class="relative  hidden md:block">
+            <button
+              class="relative flex  items-center w-[300px] h-10 text-sm border-2 border-black px-4 cursor-pointer"
+              style="padding-left: 1cm"
+              @click="showSearchModal = true"
+            >
+              <div
+                style="padding-left: 0.3cm"
+                class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
+            </button>
+          </div>
+          <div class="logo" style="margin-right: 0cm">
+            <p class="text-4xl text-pink-400 font-bold">KANDRA</p>
+          </div>
+          <div class="icon-nav flex items-center justify-between">
+            <div>
+              <i class="fa-solid fa-bag-shopping text-2xl"></i>
+            </div>
+            <div class="mx-10">
+              <i
+                class="fa-solid fa-heart text-2xl"
+                style="margin: 0 0.5cm 0 0.5cm"
+              ></i>
+            </div>
+            <div>
+  <i
+    class="fa-solid fa-user text-2xl cursor-pointer"
+    @click="showModal = true"
+  ></i>
+</div>
+
+          </div>
+        </div>
+            <div class=" w-[600px] items-center justify-center mx-auto">
+              <input
+              type="text"
+              v-model="searchQuery"
+              placeholder="Type to search..."
+              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <!-- Search Suggestions -->
+            <div class="mt-4">
+              <p class="text-lg font-semibold mb-2">Suggestions:</p>
+              <ul class="space-y-2">
+                <li
+                  v-for="(suggestion, index) in filteredSuggestions"
+                  :key="index"
+                  class="cursor-pointer hover:underline text-pink-500"
+                  @click="selectSuggestion(suggestion)"
+                >
+                  {{ suggestion }}
+                </li>
+              </ul>
+            </div>
+            </div>
           </div>
         </div>
 
@@ -100,6 +169,37 @@
 
           <!-- Login or Register Form -->
           <form @submit.prevent="submitForm">
+        
+            <div v-if="!isLogin" class="mb-4 flex justify-between">
+             <div class="last-name">
+              <label
+                for="lastName"
+                class="block text-lg mb-2 font-medium text-gray-600"
+              >First Name</label>
+              <input
+                type="text"
+                id="lastName"
+                placeholder="Enter first name"
+                v-model="form.lastName"
+                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                required
+              />
+             </div>
+             <div class="last-name">
+              <label
+                for="lastName"
+                class="block text-lg mb-2 font-medium text-gray-600"
+              >Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                placeholder="Enter last name"
+                v-model="form.lastName"
+                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                required
+              />
+             </div>
+            </div>
             <div class="mb-4">
               <label
                 for="phoneNumber"
@@ -130,7 +230,7 @@
               />
             </div>
 
-            <div class="mb-10">
+            <div v-if="isLogin" class="mb-10">
               <label
                 for="password"
                 class="block text-lg mb-2 font-medium text-gray-600"
@@ -144,6 +244,37 @@
                 required
               />
             </div>
+          <!-- Country Dropdown -->
+<div v-if="!isLogin" class="flex space-x-5">
+  <div class="mb-4 w-1/2">
+    <label class="block text-lg mb-2 font-medium text-gray-600">Country</label>
+    <select
+      v-model="selectedCountry"
+      @change="fetchStates"
+      class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black "
+    >
+      <!-- <option disabled value="">Select a country</option> -->
+      <option v-for="country in countries" :key="country.iso2" :value="country.iso2">
+        {{ country.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- State/Province Dropdown -->
+  <div class="mb-4 w-1/2">
+    <label class="block text-lg mb-2 font-medium text-gray-600">Province / State</label>
+    <select
+      v-model="selectedState"
+      class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+    >
+      <!-- <option disabled value="">Select a province</option> -->
+      <option v-for="state in states" :key="state.iso2" :value="state.name">
+        {{ state.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
 
             <button
               type="submit"
@@ -154,7 +285,7 @@
 
             <!-- Extra Options -->
             <div class="text-form">
-              <p class="text-center mt-3 text-gray-600 font-medium">
+              <p v-if="isLogin" class="text-center mt-3 text-gray-600 font-medium">
                 Don't remember your password ?
               </p>
 
@@ -169,10 +300,16 @@
                 <i class="fa-brands fa-telegram text-4xl mx-2" style="color: #74C0FC;"></i>
               </div>
 
-              <p class="text-center mt-3 text-gray-500 font-medium">
+              <p v-if="isLogin" class="text-center mt-3 text-gray-500 font-medium">
                 New to KANDRA?
                 <span class="text-pink-300 cursor-pointer" @click="isLogin = false">
                   Register now
+                </span>
+              </p>
+              <p v-if="!isLogin" class="text-center mt-3 text-gray-500 font-medium">
+                Already have an account?
+                <span class="text-pink-300 cursor-pointer" @click="isLogin = true">
+                  Login
                 </span>
               </p>
             </div>
@@ -382,17 +519,90 @@ export default {
   data() {
     return {
       showModal: true,
+      showSearchModal: false,
+      searchQuery: "",
+      suggestions: [
+        "New Arrivals",
+        "Best Sellers",
+        "Dresses",
+        "Shoes",
+        "Accessories",
+        "Sale Items",
+        "Jackets",
+        "Sweaters",
+      ],
       isLogin: true,
       form: {
         phoneNumber: "",
         email: "",
         password: "",
+        firstName: "",
+        lastName: "",
       },
-      loginVideo: "../../public/video/Video-register.mp4", 
-    registerVideo: "../../public/video/Video-register.mp4", 
+      countries: [],
+      states: [],
+      selectedCountry: "",
+      selectedState: "",
+      loginVideo: "/video/Video-register.mp4",
+      registerVideo: "/video/Video-register.mp4",
+      isLoadingCountries: false,
+      isLoadingStates: false,
     };
   },
+  mounted() {
+    this.fetchCountries();
+  },
   methods: {
+    selectSuggestion(suggestion) {
+      this.searchQuery = suggestion;
+      console.log("Selected suggestion:", suggestion);
+      this.showSearchModal = false; // Close the modal after selecting a suggestion
+    },
+    async fetchCountries() {
+      this.isLoadingCountries = true;
+      try {
+        const response = await fetch("https://api.countrystatecity.in/v1/countries", {
+          headers: {
+  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
+}
+        });
+        const data = await response.json();
+        this.countries = data;
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      } finally {
+        this.isLoadingCountries = false;
+      }
+    },
+    async fetchStates() {
+      if (!this.selectedCountry) return;
+
+      this.isLoadingStates = true;
+      try {
+        const response = await fetch(
+          `https://api.countrystatecity.in/v1/countries/${this.selectedCountry}/states`,
+          {
+            headers: {
+  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
+}
+          }
+        );
+        const data = await response.json();
+        this.states = data;
+      } catch (error) {
+        console.error("Error fetching states:", error);
+      } finally {
+        this.isLoadingStates = false;
+      }
+    },
+    computed: {
+    filteredSuggestions() {
+      if (!this.searchQuery) return this.suggestions;
+      return this.suggestions.filter((suggestion) =>
+        suggestion.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
     submitForm() {
       if (this.isLogin) {
         console.log("Logging in:", this.form);
