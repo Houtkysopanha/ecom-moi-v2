@@ -10,31 +10,33 @@
     >
       <template #item="slotProps">
         <div class="m-4">
-          <div class="mb-2">
-            <div class="relative mx-auto group"> <!-- Added group class here -->
-              <img
-                :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
-                :alt="slotProps.data.name"
-                class="w-full h-[500px] object-cover"
-                @mouseover="hoveredProduct = slotProps.data.name"
-                @mouseleave="hoveredProduct = null"
-                @error="onImageError"
-              />
+          <router-link :to="{ name: 'ProductDetail', params: { productName: slotProps.data.name }, query: { data: JSON.stringify(slotProps.data) } }">
+            <div class="mb-2">
+              <div class="items relative mx-auto group">
+                <img
+                  :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
+                  :alt="slotProps.data.name"
+                  class="w-full h-[500px] object-cover"
+                  @mouseover="hoveredProduct = slotProps.data.name"
+                  @mouseleave="hoveredProduct = null"
+                  @error="onImageError"
+                />
 
-              <Tag
-                :value="''"
-                :icon="slotProps.data.icon"
-                class="absolute"
-                style="right: 20px; top: 20px; font-size: 25px; color: white;"
-              />
-              <!-- Shop Now Button -->
-              <button
-                class="shop-now-btn absolute bottom-0.5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
-              >
-                Shop Now
-              </button>
+                <Tag
+                  :value="''"
+                  :icon="slotProps.data.icon"
+                  class="absolute"
+                  style="right: 20px; top: 20px; font-size: 25px; color: white;"
+                />
+                <button
+                  class="shop-now-btn absolute bottom-0.5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
+                >
+                  Shop Now
+                </button>
+              </div>
             </div>
-          </div>
+          </router-link>
+
           <div class="mb-1 font-bold uppercase">{{ slotProps.data.name }}</div>
           <div class="">
             <div class="mt-0 text-lg">
@@ -60,104 +62,83 @@
 <script>
 import { ref } from "vue";
 import Carousel from "primevue/carousel";
-import Button from "primevue/button";
 import Tag from "primevue/tag";
 
 export default {
   name: "ImageCarousel",
   components: {
     Carousel,
-    Button,
     Tag,
   },
-
   setup() {
     const products = ref([
-  {
-    name: "red hat",
-    price: 53.00,
-    image: "/images/Model-RedHat1.png",
-    hoverImage: "/images/Model-RedHat2.png",
-    icon: "pi pi-heart-fill",
-    colors: [
+      {
+        name: "red hat",
+        price: 53.0,
+        image: "/images/Model-RedHat1.png",
+        hoverImage: "/images/Model-RedHat2.png",
+        icon: "pi pi-heart-fill",
+        colors: [
           { code: "#9B4C82", active: true },
           { code: "#231F20", active: true },
         ],
         selectedColorIndex: 0,
-  },
-  {
-    name: "black jumpsuit",
-    price: 30,
-    image: "/images/Model-2.png",
-    hoverImage: "/images/Model-22.png",
-    icon: "pi pi-heart-fill",
-  },
-  {
-    name: "soft plain sweater",
-    price: 70,
-    image: "/images/Model-3.png",
-    hoverImage: "/images/Model-33.png",
-    icon: "pi pi-heart-fill",
-  },
-  {
-    name: "zeller top",
-    price: 40,
-    image: "/images/Model-4.png",
-    hoverImage: "/images/Model-44.png",
-    icon: "pi pi-heart-fill",
-  },
-  {
-    name: "Product 5",
-    price: 40,
-    image: "/images/blue-t-shirt.jpg",
-    hoverImage: "/images/blue-t-shirt-hover.jpg",
-    icon: "pi pi-heart-fill",
-  },
-]);
-
-    const numVisible = ref(4); 
-    const hoveredProduct = ref(null); 
-
-    const responsiveOptions = ref([
-      {
-        breakpoint: "1024px",
-        numVisible: 3,
-        numScroll: 1,
       },
       {
-        breakpoint: "768px",
-        numVisible: 2,
-        numScroll: 1,
+        name: "black jumpsuit",
+        price: 30,
+        image: "/images/Model-2.png",
+        hoverImage: "/images/Model-22.png",
+        icon: "pi pi-heart-fill",
       },
       {
-        breakpoint: "560px",
-        numVisible: 1,
-        numScroll: 1,
+        name: "soft plain sweater",
+        price: 70,
+        image: "/images/Model-3.png",
+        hoverImage: "/images/Model-33.png",
+        icon: "pi pi-heart-fill",
+      },
+      {
+        name: "zeller top",
+        price: 40,
+        image: "/images/Model-4.png",
+        hoverImage: "/images/Model-44.png",
+        icon: "pi pi-heart-fill",
+      },
+      {
+        name: "Product 5",
+        price: 40,
+        image: "/images/blue-t-shirt.jpg",
+        hoverImage: "/images/blue-t-shirt-hover.jpg",
+        icon: "pi pi-heart-fill",
       },
     ]);
-    const selectColor = (product, index) => {
-      product.selectedColorIndex = index; // Update the selected color index for the product
-    };
 
-    const changeNumVisible = (newNumVisible) => {
-      numVisible.value = newNumVisible; // Update the number of visible items
+    const hoveredProduct = ref(null);
+    const numVisible = ref(4);
+
+    const responsiveOptions = ref([
+      { breakpoint: "1024px", numVisible: 3, numScroll: 1 },
+      { breakpoint: "768px", numVisible: 2, numScroll: 1 },
+      { breakpoint: "560px", numVisible: 1, numScroll: 1 },
+    ]);
+
+    const selectColor = (product, index) => {
+      product.selectedColorIndex = index;
     };
 
     return {
       products,
+      hoveredProduct,
       numVisible,
       responsiveOptions,
-      hoveredProduct,
-      changeNumVisible,
       selectColor,
-      
     };
   },
-  
 };
 </script>
 
-<style>
+<style scoped>
 .color-selector {
   display: flex;
   align-items: center;
@@ -176,14 +157,12 @@ export default {
 }
 
 .shop-now-btn {
-  background-color: rgba(0, 0, 0, 0.5); /* Lower opacity for better visibility */
+  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 10px 20px;
   border: none;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  opacity: 0; /* Initially hidden */
 }
-
 </style>

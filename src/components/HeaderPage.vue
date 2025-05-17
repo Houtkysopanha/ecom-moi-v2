@@ -48,21 +48,9 @@
           <div class="bg-white w-full h-[400px]  rounded-lg">
             <div class="search flex mx-auto flex-wrap items-center justify-between" style="padding: 1cm;">
           <div class="relative  hidden md:block">
-            <button
-              class="relative flex  items-center w-[300px] h-10 text-sm border-2 border-black px-4 cursor-pointer"
-              style="padding-left: 1cm"
-              @click="showSearchModal = true"
-            >
-              <div
-                style="padding-left: 0.3cm"
-                class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
-              >
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </div>
-              <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
-            </button>
+            <i  @click="showSearchModal = false" class="fa-solid fa-xmark cursor-pointer" style="font-size: 25px; width: 300px;"></i>
           </div>
-          <div class="logo" style="margin-right: 0cm">
+          <div class="logo "  style="margin-right: 3.5cm">
             <p class="text-4xl text-pink-400 font-bold">KANDRA</p>
           </div>
           <div class="icon-nav flex items-center justify-between">
@@ -84,12 +72,12 @@
 
           </div>
         </div>
-            <div class=" w-[600px] items-center justify-center mx-auto">
+            <div class=" w-[800px] items-center justify-center mx-auto">
               <input
               type="text"
               v-model="searchQuery"
               placeholder="Type to search..."
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              class="w-full border-2 border-black px-3 py-2 "
             />
             <!-- Search Suggestions -->
             <div class="mt-4">
@@ -544,7 +532,7 @@ export default {
       selectedCountry: "",
       selectedState: "",
       loginVideo: "/video/Video-register.mp4",
-      registerVideo: "/video/Video-register.mp4",
+      registerVideo: "/video/Video-register2.mp4",
       isLoadingCountries: false,
       isLoadingStates: false,
     };

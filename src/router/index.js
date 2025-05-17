@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../views/MainLayout.vue';
-import HeaderPage from '../components/HeaderPage.vue';
-import VideoPage from '../views/VideoPage.vue';
 import BodyPage from '../views/BodyPage.vue';
-import CatFilter from '../views/CatFilter.vue';
-import FooterPage from '../components/FooterPage.vue';
+import ProductDetail from '../views/ProductDetail.vue';
 
 
 const routes = [
@@ -14,19 +11,15 @@ const routes = [
    component: MainLayout,
    children: [
     {
-        path: 'HeaderPage',
-        name: 'HeaderPage',
-        component: HeaderPage
+      path: '',
+      name: 'Home',
+      component: BodyPage,
     },
     {
-      path: 'VideoPage',
-      name: 'VideoPage',
-      component: VideoPage
-    },
-    {
-      path: 'FooterPage',
-      name: 'FooterPage',
-      component: FooterPage
+      path: '/products/:productName',
+      name: 'ProductDetail',
+      component: ProductDetail,
+      props: true,
     }
    ]
   }

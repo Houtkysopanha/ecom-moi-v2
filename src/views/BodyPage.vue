@@ -1,5 +1,17 @@
 <template>
   <div class="main-body">
+    <div class="video-page mt-2">
+      <div class="flex justify-center">
+        <video
+          class="w-screen h-[650px] object-cover"
+          autoplay
+          muted
+          loop
+        >
+          <source src="/video/Video-header.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
     <div class="shop-by-cat">
       <div class="header mt-8">
         <p class="text-2xl font-bold uppercase text-center tracking-wider">
@@ -40,6 +52,7 @@
       <VideoSubscribe />
     </div>
     </div>
+  </div>
   </div>
 </template>
 

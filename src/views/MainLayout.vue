@@ -2,10 +2,10 @@
     <div id="app" class=" bg-pink-50">
         <header>
             <HeaderPage />
-            <VideoPage />
+            <!-- <VideoPage /> -->
         </header>
         <main>
-            <BodyPage />
+            <router-view />
         </main>
         <footer>
             <FooterPage />

@@ -3,7 +3,7 @@
       <div class="relative flex justify-center">
         <video class="w-screen h-[420px] object-cover" autoplay muted loop>
           <source
-            src="../../public/video/VIdeo-Subscrive.mp4"
+            src="/video/VIdeo-Subscribe.mp4"
             type="video/mp4"
           />
           Your browser does not support the video tag.
