@@ -14,10 +14,10 @@
     </div>
 </template>
 <script>
-import HeaderPage from '../components/HeaderPage.vue'
-import BodyPage from './BodyPage.vue'
-import VideoPage from './VideoPage.vue'
-import FooterPage from '../components/FooterPage.vue'
+import HeaderPage from '../../components/HeaderPage.vue'
+import BodyPage from '../HomePage/HomePage.vue'
+import VideoPage from '../Video/VideoPage.vue'
+import FooterPage from '../../components/FooterPage.vue'
 export default{
   components: { HeaderPage, VideoPage, BodyPage, FooterPage },
     name: 'MainLayout',

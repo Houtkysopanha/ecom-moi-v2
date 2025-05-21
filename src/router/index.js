@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '../views/MainLayout.vue';
-import BodyPage from '../views/BodyPage.vue';
-import ProductDetail from '../views/ProductDetail.vue';
+import MainLayout from '../views/Main/MainLayout.vue';
+import BodyPage from '../views/HomePage/HomePage.vue';
+import ProductDetail from '../views/Product/ProductDetail.vue';
+import FavouritePage from '../views/Favorites/FavouritePage.vue';
 
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
       name: 'ProductDetail',
       component: ProductDetail,
       props: true,
+    },
+    {
+      path: '/favoritesPage',
+      name: 'FavoritesPage',
+      component: FavouritePage,
     }
    ]
   }

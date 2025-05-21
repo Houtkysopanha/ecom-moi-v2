@@ -18,19 +18,35 @@
               <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
             </button>
           </div>
-          <div class="logo" style="margin-right: 3.5cm">
+         <router-link to="/">
+           <div class="logo" style="margin-right: 3.5cm">
             <p class="text-4xl text-pink-400 font-bold">KANDRA</p>
           </div>
+         </router-link>
           <div class="icon-nav flex items-center justify-between">
-            <div>
-              <i class="fa-solid fa-bag-shopping text-2xl"></i>
-            </div>
-            <div class="mx-10">
-              <i
-                class="fa-solid fa-heart text-2xl"
-                style="margin: 0 0.5cm 0 0.5cm"
-              ></i>
-            </div>
+
+           <div>
+  <i
+    class="fa-solid fa-bag-shopping text-2xl cursor-pointer"
+    @click="showBagDrawer = true"
+  ></i>
+</div>
+<ShoppingBagDrawer :visible="showBagDrawer" @close="showBagDrawer = false" />
+          <router-link to="/favoritesPage" class="relative">
+  <div class="mx-10">
+    <i
+      class="fa-solid fa-heart text-2xl"
+      style="margin: 0 0.5cm 0 0.5cm"
+    ></i>
+    <span
+      v-if="favoritesCount > 0"
+      class="absolute -top-2 left-[75px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
+      style="font-size: 12px;"
+    >
+      {{ favoritesCount }}
+    </span>
+  </div>
+</router-link>
             <div>
   <i
     class="fa-solid fa-user text-2xl cursor-pointer"
@@ -502,13 +518,19 @@
 </template>
 
 <script>
+import ShoppingBagDrawer from "../views/BagShopping/ShoppingBagDrawer.vue";
 export default {
   name: "HeaderPage",
+  components: {
+    ShoppingBagDrawer,
+  },
   data() {
     return {
       showModal: true,
       showSearchModal: false,
       searchQuery: "",
+      favoritesStore: null,
+      showBagDrawer: false,
       suggestions: [
         "New Arrivals",
         "Best Sellers",
@@ -539,20 +561,33 @@ export default {
   },
   mounted() {
     this.fetchCountries();
+    this.favoritesStore = this.$pinia._s.get('favorites') || { favorites: [] };
+  },
+  computed: {
+    filteredSuggestions() {
+      if (!this.searchQuery) return this.suggestions;
+      return this.suggestions.filter((suggestion) =>
+        suggestion.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+    favoritesCount() {
+      return this.favoritesStore && this.favoritesStore.favorites
+        ? this.favoritesStore.favorites.length
+        : 0;
+    },
   },
   methods: {
     selectSuggestion(suggestion) {
       this.searchQuery = suggestion;
-      console.log("Selected suggestion:", suggestion);
-      this.showSearchModal = false; // Close the modal after selecting a suggestion
+      this.showSearchModal = false;
     },
     async fetchCountries() {
       this.isLoadingCountries = true;
       try {
         const response = await fetch("https://api.countrystatecity.in/v1/countries", {
           headers: {
-  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
-}
+            "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0"
+          }
         });
         const data = await response.json();
         this.countries = data;
@@ -564,15 +599,14 @@ export default {
     },
     async fetchStates() {
       if (!this.selectedCountry) return;
-
       this.isLoadingStates = true;
       try {
         const response = await fetch(
           `https://api.countrystatecity.in/v1/countries/${this.selectedCountry}/states`,
           {
             headers: {
-  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
-}
+              "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0"
+            }
           }
         );
         const data = await response.json();
@@ -583,14 +617,6 @@ export default {
         this.isLoadingStates = false;
       }
     },
-    computed: {
-    filteredSuggestions() {
-      if (!this.searchQuery) return this.suggestions;
-      return this.suggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    },
-  },
     submitForm() {
       if (this.isLogin) {
         console.log("Logging in:", this.form);
@@ -602,7 +628,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.5s ease;

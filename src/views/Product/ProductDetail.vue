@@ -141,7 +141,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import CompleteYourLook from './CompleteYourLook.vue'
 import SimilarStyle from './SimilarStyle.vue'
-import VideoSubscribe from './VideoSubscribe.vue'
+import VideoSubscribe from '../Video/VideoSubscribe.vue'
 const route = useRoute()
 
 const productData = ref({})

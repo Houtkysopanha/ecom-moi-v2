@@ -60,7 +60,7 @@
 import CatFilter from "./CatFilter.vue";
 import ImageCarousel from "./ImageCarousel.vue";
 import OnSale from "./OnSale.vue";
-import VideoSubscribe from './VideoSubscribe.vue';
+import VideoSubscribe from '../Video/VideoSubscribe.vue';
 
 export default {
   components: { CatFilter, ImageCarousel, OnSale, VideoSubscribe },
