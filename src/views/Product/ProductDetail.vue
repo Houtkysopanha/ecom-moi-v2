@@ -106,7 +106,8 @@
 
       <!-- Add to Bag -->
       <div class="flex items-center gap-4">
-        <button class="bg-black text-white px-8 py-3 font-medium uppercase tracking-wide">
+        <button class="bg-black text-white px-8 py-3 font-medium uppercase tracking-wide"  @click="bagStore.addToBag(product)">
+          
           Add to Bag
         </button>
         <span class="text-2xl cursor-pointer"> <i class="pi pi-heart" ></i> </span> 
@@ -139,11 +140,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useBagStore } from '../../stores/bag'
+import { useFavoritesStore } from '../../stores/favorites'
+
 import CompleteYourLook from './CompleteYourLook.vue'
 import SimilarStyle from './SimilarStyle.vue'
 import VideoSubscribe from '../Video/VideoSubscribe.vue'
 const route = useRoute()
-
+const bagStore = useBagStore()
 const productData = ref({})
 const thumbnails = ref([])
 const startIndex = ref(0)

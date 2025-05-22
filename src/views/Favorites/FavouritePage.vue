@@ -42,9 +42,12 @@
           </select>
 
           <!-- Button -->
-          <button class="w-full bg-black text-white mt-4 py-2 text-lg font-semibold">
-            ADD TO MY BAG
-          </button>
+          <button
+  class="w-full bg-black text-white mt-4 py-2 text-lg font-semibold"
+  @click="bagStore.addToBag(product)"
+>
+  ADD TO MY BAG
+</button>
         </div>
       </div>
     </div>
@@ -53,5 +56,7 @@
 
 <script setup>
 import { useFavoritesStore } from '../../stores/favorites'
+import { useBagStore } from '../../stores/bag'
 const favoritesStore = useFavoritesStore()
+const bagStore = useBagStore()
 </script>

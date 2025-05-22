@@ -3,6 +3,7 @@ import MainLayout from '../views/Main/MainLayout.vue';
 import BodyPage from '../views/HomePage/HomePage.vue';
 import ProductDetail from '../views/Product/ProductDetail.vue';
 import FavouritePage from '../views/Favorites/FavouritePage.vue';
+import CheckOut from '../views/Checkout/CheckOut.vue';
 
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
       path: '/favoritesPage',
       name: 'FavoritesPage',
       component: FavouritePage,
+    },
+    {
+      path: '/CheckoutPage',
+      name: 'CheckoutPage',
+      component: CheckOut
     }
    ]
   }

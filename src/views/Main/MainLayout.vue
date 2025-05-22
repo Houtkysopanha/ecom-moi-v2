@@ -1,7 +1,7 @@
 <template>
     <div id="app" class=" bg-pink-50">
         <header>
-            <HeaderPage />
+            <!-- <HeaderPage /> -->
             <!-- <VideoPage /> -->
         </header>
         <main>
