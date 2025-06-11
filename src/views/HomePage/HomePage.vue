@@ -3,7 +3,7 @@
     <div class="video-page mt-2">
       <div class="flex justify-center">
         <video
-          class="w-screen h-[650px] object-cover"
+          class="w-screen h-[750px] object-cover"
           autoplay
           muted
           loop
@@ -12,6 +12,7 @@
           Your browser does not support the video tag.
         </video>
       </div>
+    </div>
     <div class="shop-by-cat">
       <div class="header mt-8">
         <p class="text-2xl font-bold uppercase text-center tracking-wider">
@@ -31,15 +32,15 @@
       <div class="banner-discount mt-8 relative">
         <img
           class="w-full h-[500px] object-cover object-center p-[1cm] opacity-90"
-          src="/images/Banner-Disc.jpg"
+          src="/images/wing.png"
           alt="Banner Discount"
         />
         <div
           class="absolute inset-0 flex flex-col items-center justify-center uppercase tracking-wider space-y-4"
         >
-          <p class="text-white text-3xl font-bold">don't delay; but todya.</p>
+          <p class="text-white text-3xl font-bold">don't delay; buy today.</p>
           <p class="text-white text-5xl font-bold">summer sale</p>
-          <p class="text-white text-6xl font-bold">50% percents off</p>
+          <p class="text-white text-6xl font-bold">50% percent off</p>
         </div>
       </div>
       <div class="on-sale">
@@ -48,11 +49,10 @@
         </p>
       </div>
       <OnSale />
-    <div class="video-subscribe">
-      <VideoSubscribe />
+      <div class="video-subscribe">
+        <VideoSubscribe />
+      </div>
     </div>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -60,7 +60,7 @@
 import CatFilter from "./CatFilter.vue";
 import ImageCarousel from "./ImageCarousel.vue";
 import OnSale from "./OnSale.vue";
-import VideoSubscribe from '../Video/VideoSubscribe.vue';
+import VideoSubscribe from '../VideoPage/VideoSubscribe.vue';
 
 export default {
   components: { CatFilter, ImageCarousel, OnSale, VideoSubscribe },
@@ -69,12 +69,11 @@ export default {
 </script>
 
 <style>
-/* Add styles for the small text on the image */
 .product-card .promotion-text {
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: rgba(255, 0, 0, 0.8); /* Red background with transparency */
+  background-color: rgba(255, 0, 0, 0.8);
   color: white;
   font-size: 14px;
   font-weight: bold;

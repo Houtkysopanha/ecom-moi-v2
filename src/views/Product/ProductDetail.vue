@@ -54,7 +54,7 @@
     </div>
 
     <!-- Product Details -->
-    <div class="flex flex-col gap-6 flex-1">
+    <div class="flex flex-col gap-2 flex-1">
       <div class="video-page">
         <div class="flex justify-center">
       <video class="w-screen h-[23rem] object-cover"  autoplay muted loop>
@@ -65,6 +65,14 @@
         Your browser does not support the video tag.
       </video>
     </div>
+     <div class="full-video">
+  <p
+    class="mt-5 text-black hover:text-pink-400 underline cursor-pointer"
+    @click="goToVideoDetail"
+  >
+    Click here to see full video <i class="pi pi-chart-line"></i>
+  </p>
+</div>
     </div>
     <div class="detail flex flex-row flex-1 gap-5">
       <div class="flex flex-col gap-3">
@@ -139,14 +147,16 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router' // <-- add useRouter
 import { useBagStore } from '../../stores/bag'
 import { useFavoritesStore } from '../../stores/favorites'
 
 import CompleteYourLook from './CompleteYourLook.vue'
 import SimilarStyle from './SimilarStyle.vue'
-import VideoSubscribe from '../Video/VideoSubscribe.vue'
+import VideoSubscribe from '../VideoPage/VideoSubscribe.vue'
+
 const route = useRoute()
+const router = useRouter() // <-- add this line
 const bagStore = useBagStore()
 const productData = ref({})
 const thumbnails = ref([])
@@ -161,7 +171,7 @@ onMounted(() => {
     thumbnails.value = [
       productData.value.image,
       productData.value.hoverImage,
-       productData.value.image,
+      productData.value.image,
       productData.value.hoverImage,
       productData.value.hoverImage,
     ]
@@ -169,8 +179,8 @@ onMounted(() => {
   }
 })
 const colors = [
-  { name: 'RED', image: '/public/images/red-hat.png' },
-  { name: 'BROWN', image: '/public/images/brown-hat.png' }
+  { name: 'RED', image: '/images/red-hat.png' },
+  { name: 'BROWN', image: '/images/brown-hat.png' }
 ]
 
 const visibleImages = computed(() =>
@@ -196,8 +206,13 @@ function increaseQuantity() {
 function decreaseQuantity() {
   if (quantity.value > 1) quantity.value--
 }
+function goToVideoDetail() {
+  router.push({
+    name: 'VideoDetail',
+    query: { video: productData.value.video }
+  })
+}
 </script>
-
 <style scoped>
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.5s ease;

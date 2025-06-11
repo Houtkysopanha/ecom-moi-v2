@@ -5,7 +5,7 @@
 
       <div class="row1 text-start">
         <p class="text-lg font-bold uppercase mb-2"> <i class="fa-brands fa-telegram"></i> Telegram</p>
-        <img src="../../public/images/qr-code.png" alt="">
+        <img src="/images/qr-code.png" alt="">
       </div>
       <!-- Row 2: Follow Us -->
 

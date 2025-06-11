@@ -85,6 +85,7 @@ const products = ref([
     image: "/images/Model-RedHat1.png",
     hoverImage: "/images/Model-RedHat2.png",
     icon: "pi pi-heart-fill",
+    video: "/video/Video-hat-red.mp4",
     colors: [
       { code: "#9B4C82", active: true },
       { code: "#231F20", active: true },

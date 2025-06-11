@@ -70,7 +70,6 @@
             <p class="text-md font-bold">USD ${{ deliveryFee }}</p>
           </div>
         </div>
-
         <div class="flex justify-between items-center py-4">
           <p class="text-xl font-bold uppercase">Amount to pay</p>
           <p class="text-xl font-bold">USD ${{ amountToPay }}</p>
