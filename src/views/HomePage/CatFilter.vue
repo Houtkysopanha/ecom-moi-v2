@@ -1,55 +1,35 @@
 <template>
-    <div class="filter-container">
-      <button
-        v-for="(category, index) in categories"
-        :key="index"
-        :class="['filter-button', { active: activeCategory === category }]"
-        @click="activeCategory = category"
-      >
-        {{ category }}
-      </button>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        categories: [
-          'NEW ARRIVAL',
-          'BEST SELLER',
-          'DRESS',
-          'TOP',
-          'BOTTOM',
-          'BACK IN STOCK',
-        ],
-        activeCategory: 'NEW ARRIVAL',
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .filter-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 0.6cm;
-  }
-  
-  .filter-button {
-    border: 1px solid #333;
-    background-color: white;
-    color: #333;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .filter-button.active {
-    background-color: #333;
-    color: white;
-  }
-  </style>
-  
+  <div class="flex flex-wrap md:flex-nowrap gap-2 md:gap-4 justify-center mt-4 overflow-x-auto px-2">
+    <button
+      v-for="(category, index) in categories"
+      :key="index"
+      @click="activeCategory = category"
+      :class="[
+        'border font-bold  px-4 py-2 whitespace-nowrap transition',
+        activeCategory === category
+          ? 'bg-black text-white border-black'
+          : 'bg-white text-black border-black hover:bg-pink-100'
+      ]"
+    >
+      {{ category }}
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      categories: [
+        'NEW ARRIVAL',
+        'BEST SELLER',
+        'DRESS',
+        'TOP',
+        'BOTTOM',
+        'BACK IN STOCK',
+      ],
+      activeCategory: 'NEW ARRIVAL',
+    };
+  },
+};
+</script>

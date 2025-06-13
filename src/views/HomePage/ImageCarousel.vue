@@ -5,15 +5,14 @@
       :numVisible="numVisible"
       :numScroll="1"
       :responsiveOptions="responsiveOptions"
-      style="padding: 0.7cm 3cm 0cm"
       class="custom-carousel"
+      :style="{ padding: '0.7cm 1.5rem 0cm' }"
     >
       <template #item="slotProps">
-        <div class="m-4 relative">
-          <!-- Heart Icon for Wishlist (OUTSIDE router-link) -->
+        <div class="relative m-2 sm:m-4">
+          <!-- Heart Icon for Wishlist -->
           <span
-            class="absolute cursor-pointer z-10"
-            style="right: 20px; top: 20px; font-size: 25px;"
+            class="absolute cursor-pointer z-10 right-3 top-3 sm:right-5 sm:top-5 text-xl sm:text-2xl"
             @click.stop="toggleFavorite(slotProps.data)"
           >
             <i
@@ -35,23 +34,23 @@
                 <img
                   :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
                   :alt="slotProps.data.name"
-                  class="w-full h-[500px] object-cover"
+                  class="w-full h-56 sm:h-72 md:h-[400px] lg:h-[500px] object-cover transition"
                   @mouseover="hoveredProduct = slotProps.data.name"
                   @mouseleave="hoveredProduct = null"
                   @error="onImageError"
                 />
                 <!-- Shop Now Button -->
                 <button
-                  class="shop-now-btn absolute bottom-0.5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
+                  class="shop-now-btn absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out text-xs sm:text-sm px-3 py-1"
                 >
                   Shop Now
                 </button>
               </div>
             </div>
           </router-link>
-          <div class="mb-1 font-bold uppercase">{{ slotProps.data.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base">{{ slotProps.data.name }}</div>
           <div>
-            <div class="mt-0 text-lg">
+            <div class="mt-0 text-sm sm:text-lg">
               ${{ slotProps.data.price?.toFixed(2) }}
             </div>
             <div class="color-selector mt-2">

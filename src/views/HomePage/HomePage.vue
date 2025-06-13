@@ -1,9 +1,10 @@
 <template>
   <div class="main-body">
+    <!-- Responsive Video Section -->
     <div class="video-page mt-2">
       <div class="flex justify-center">
         <video
-          class="w-screen h-[750px] object-cover"
+          class="w-full h-[580px] sm:h-64 md:h-[400px] lg:h-[750px] object-cover"
           autoplay
           muted
           loop
@@ -15,7 +16,7 @@
     </div>
     <div class="shop-by-cat">
       <div class="header mt-8">
-        <p class="text-2xl font-bold uppercase text-center tracking-wider">
+        <p class="text-lg sm:text-2xl font-bold uppercase text-center tracking-wider">
           Shop By Category
         </p>
       </div>
@@ -23,28 +24,29 @@
       <ImageCarousel />
       <div class="text-center mt-6">
         <p
-          class="inline-block text-2xl font-medium uppercase tracking-wider border-2 border-black p-3 hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          class="inline-block text-lg sm:text-2xl font-medium uppercase tracking-wider border-2 border-black p-2 sm:p-3 hover:bg-black hover:text-white transition duration-300 ease-in-out"
         >
           Shop By Category
           <i class="pi pi-chevron-right ml-2" style="font-size: 1.2rem;"></i>
         </p>
       </div>
+      <!-- Responsive Banner Discount -->
       <div class="banner-discount mt-8 relative">
         <img
-          class="w-full h-[500px] object-cover object-center p-[1cm] opacity-90"
+          class="w-full h-40 sm:h-64 md:h-[350px] lg:h-[500px] object-cover object-center p-2 sm:p-6 md:p-[1cm] opacity-90"
           src="/images/wing.png"
           alt="Banner Discount"
         />
         <div
-          class="absolute inset-0 flex flex-col items-center justify-center uppercase tracking-wider space-y-4"
+          class="absolute inset-0 flex flex-col items-center justify-center uppercase tracking-wider space-y-2 sm:space-y-4"
         >
-          <p class="text-white text-3xl font-bold">don't delay; buy today.</p>
-          <p class="text-white text-5xl font-bold">summer sale</p>
-          <p class="text-white text-6xl font-bold">50% percent off</p>
+          <p class="text-white text-lg sm:text-3xl font-bold">don't delay; buy today.</p>
+          <p class="text-white text-2xl sm:text-5xl font-bold">summer sale</p>
+          <p class="text-white text-3xl sm:text-6xl font-bold">50% percent off</p>
         </div>
       </div>
       <div class="on-sale">
-        <p class="text-2xl font-bold uppercase text-red-600 text-center tracking-wider">
+        <p class="text-lg sm:text-2xl font-bold uppercase text-red-600 text-center tracking-wider">
           On sale!!
         </p>
       </div>

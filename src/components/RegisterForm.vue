@@ -8,15 +8,15 @@
     <transition name="slide-fade" mode="out-in">
       <div
         :key="isLogin"
-        class="bg-white w-[1000px] h-[660px] flex transition-all duration-500 ease-in-out"
-        :class="{ 'flex-row-reverse': !isLogin }"
+        class="bg-white w-full max-w-[95vw] sm:max-w-2xl md:max-w-3xl lg:w-[1000px] h-auto md:h-[660px] flex flex-col md:flex-row transition-all duration-500 ease-in-out rounded-lg overflow-hidden"
+        :class="{ 'md:flex-row-reverse': !isLogin }"
       >
-        <!-- Video Column -->
-        <div class="w-1/2">
+        <!-- Video Column (hidden on mobile) -->
+        <div class="hidden md:block md:w-1/2 h-48 md:h-full">
           <transition name="fade" mode="out-in">
             <video
-              :key="isLogin ? ' loginVideo' : 'registerVideo'"
-              class="w-full h-full object-cover rounded-md"
+              :key="isLogin ? 'loginVideo' : 'registerVideo'"
+              class="w-full h-full object-cover"
               autoplay
               muted
               loop
@@ -31,12 +31,12 @@
         </div>
 
         <!-- Form Column -->
-        <div class="w-1/2 p-6">
+        <div class="w-full md:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
           <!-- Toggle Tabs -->
-          <div class="register-form flex space-x-4 cursor-pointer">
+          <div class="register-form flex space-x-4 cursor-pointer justify-center mb-4">
             <h2
               @click="isLogin = true"
-              class="text-xl font-bold mb-4"
+              class="text-lg sm:text-xl font-bold"
               :class="{
                 'text-pink-700 border-b-4 border-pink-700': isLogin,
                 'text-pink-300': !isLogin
@@ -46,7 +46,7 @@
             </h2>
             <h2
               @click="isLogin = false"
-              class="text-xl font-bold mb-4"
+              class="text-lg sm:text-xl font-bold"
               :class="{
                 'text-pink-700 border-b-4 border-pink-700': !isLogin,
                 'text-pink-300': isLogin
@@ -57,91 +57,76 @@
           </div>
 
           <!-- Login or Register Form -->
-          <form @submit.prevent="submitForm">
-            <div v-if="!isLogin" class="mb-4 flex justify-between space-x-4">
-              <div class="w-1/2">
-                <label
-                  for="firstName"
-                  class="block text-lg mb-2 font-medium text-gray-600"
-                >First Name</label>
+          <form @submit.prevent="submitForm" class="space-y-3">
+            <div v-if="!isLogin" class="flex flex-col sm:flex-row gap-3">
+              <div class="w-full sm:w-1/2">
+                <label for="firstName" class="block text-base mb-1 font-medium text-gray-600">First Name</label>
                 <input
                   type="text"
                   id="firstName"
                   placeholder="Enter first name"
                   v-model="form.firstName"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                   required
                 />
               </div>
-              <div class="w-1/2">
-                <label
-                  for="lastName"
-                  class="block text-lg mb-2 font-medium text-gray-600"
-                >Last Name</label>
+              <div class="w-full sm:w-1/2">
+                <label for="lastName" class="block text-base mb-1 font-medium text-gray-600">Last Name</label>
                 <input
                   type="text"
                   id="lastName"
                   placeholder="Enter last name"
                   v-model="form.lastName"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                   required
                 />
               </div>
             </div>
 
-            <div class="mb-4">
-              <label
-                for="phoneNumber"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Mobile number</label>
+            <div>
+              <label for="phoneNumber" class="block text-base mb-1 font-medium text-gray-600">Mobile number</label>
               <input
                 type="text"
                 id="phoneNumber"
                 placeholder="Enter your phone number"
                 v-model="form.phoneNumber"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                 required
               />
             </div>
 
-            <div v-if="!isLogin" class="mb-4">
-              <label
-                for="email"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Email</label>
+            <div v-if="!isLogin">
+              <label for="email" class="block text-base mb-1 font-medium text-gray-600">Email</label>
               <input
                 type="email"
                 id="email"
                 placeholder="Enter your email"
                 v-model="form.email"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                 required
               />
             </div>
 
-            <div v-if="isLogin" class="mb-10">
-              <label
-                for="password"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Password</label>
+            <div v-if="isLogin">
+              <label for="password" class="block text-base mb-1 font-medium text-gray-600">Password</label>
               <input
                 type="password"
                 id="password"
                 placeholder="Enter your password"
                 v-model="form.password"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                 required
               />
             </div>
 
             <!-- Country and State Dropdowns -->
-            <div v-if="!isLogin" class="flex space-x-5">
-              <div class="mb-4 w-1/2">
-                <label class="block text-lg mb-2 font-medium text-gray-600">Country</label>
+            <div v-if="!isLogin" class="flex flex-col sm:flex-row gap-3">
+              <div class="w-full sm:w-1/2">
+                <label class="block text-base mb-1 font-medium text-gray-600">Country</label>
                 <select
                   v-model="selectedCountry"
                   @change="fetchStates"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black rounded"
                 >
                   <option disabled value="">Select a country</option>
                   <option v-for="country in countries" :key="country.iso2" :value="country.iso2">
@@ -149,12 +134,11 @@
                   </option>
                 </select>
               </div>
-
-              <div class="mb-4 w-1/2">
-                <label class="block text-lg mb-2 font-medium text-gray-600">Province / State</label>
+              <div class="w-full sm:w-1/2">
+                <label class="block text-base mb-1 font-medium text-gray-600">Province / State</label>
                 <select
                   v-model="selectedState"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
+                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
                 >
                   <option disabled value="">Select a province</option>
                   <option v-for="state in states" :key="state.iso2" :value="state.name">
@@ -166,14 +150,14 @@
 
             <button
               type="submit"
-              class="px-4 w-full text-lg font-bold py-2 bg-pink-600 text-white hover:bg-pink-500"
+              class="px-4 w-full text-base sm:text-lg font-bold py-2 bg-pink-600 text-white hover:bg-pink-500 rounded"
             >
               {{ isLogin ? 'LOGIN' : 'REGISTER' }}
             </button>
 
             <!-- Extra Options -->
             <div class="text-form">
-              <p v-if="isLogin" class="text-center mt-3 text-gray-600 font-medium">
+              <p v-if="isLogin" class="text-center mt-3 text-gray-600 font-medium text-sm sm:text-base">
                 Don't remember your password?
               </p>
 
@@ -184,17 +168,17 @@
               </div>
 
               <div class="icon-instead flex justify-center mb-5">
-                <i class="fa-brands fa-facebook text-4xl mx-2" style="color: #1d8de2;"></i>
-                <i class="fa-brands fa-telegram text-4xl mx-2" style="color: #74C0FC;"></i>
+                <i class="fa-brands fa-facebook text-3xl sm:text-4xl mx-2" style="color: #1d8de2;"></i>
+                <i class="fa-brands fa-telegram text-3xl sm:text-4xl mx-2" style="color: #74C0FC;"></i>
               </div>
 
-              <p v-if="isLogin" class="text-center mt-3 text-gray-500 font-medium">
+              <p v-if="isLogin" class="text-center mt-3 text-gray-500 font-medium text-sm sm:text-base">
                 New to KANDRA?
                 <span class="text-pink-300 cursor-pointer" @click="isLogin = false">
                   Register now
                 </span>
               </p>
-              <p v-if="!isLogin" class="text-center mt-3 text-gray-500 font-medium">
+              <p v-if="!isLogin" class="text-center mt-3 text-gray-500 font-medium text-sm sm:text-base">
                 Already have an account?
                 <span class="text-pink-300 cursor-pointer" @click="isLogin = true">
                   Login
@@ -207,7 +191,6 @@
     </transition>
   </div>
 </template>
-
 <script>
 export default {
   name: "RegisterForm",
