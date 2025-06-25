@@ -56,12 +56,15 @@
             Your browser does not support the video tag.
           </video>
         </div>
-        <div class="full-video">
+        <div class="full-video flex gap-5">
           <p
             class="mt-3 sm:mt-5 text-black hover:text-pink-400 underline cursor-pointer text-start"
             @click="goToVideoDetail"
           >
             Click here to see full video <i class="pi pi-chart-line"></i>
+          </p>
+          <p class="mt-3 sm:mt-5 text-black hover:text-pink-400 underline cursor-pointer text-start">
+            Detail in facebook-page <i class="pi pi-facebook"></i>
           </p>
         </div>
       </div>

@@ -7,6 +7,7 @@ import VideoDetail from '../views/VideoPage/VideoDetail.vue'
 const ProductDetail = () => import('../views/Product/ProductDetail.vue')
 const FavouritePage = () => import('../views/Favorites/FavouritePage.vue')
 const CheckOut = () => import('../views/Checkout/CheckOut.vue')
+const UserInformation = () => import('../views/UserInformation/UserInformation.vue') // <-- Add this
 
 const routes = [
   {
@@ -39,7 +40,12 @@ const routes = [
         path: '/VideoDetail',
         name: 'VideoDetail',
         component: VideoDetail
-      }
+      },
+      {
+        path: '/user-information',
+        name: 'UserInformation',
+        component: UserInformation,
+      } // <-- Add missing closing brace here
     ]
   }
 ]

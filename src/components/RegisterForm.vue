@@ -4,7 +4,6 @@
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
     @click.self="showModal = false"
   >
-    <!-- Transition container -->
     <transition name="slide-fade" mode="out-in">
       <div
         :key="isLogin"
@@ -119,34 +118,7 @@
               />
             </div>
 
-            <!-- Country and State Dropdowns -->
-            <div v-if="!isLogin" class="flex flex-col sm:flex-row gap-3">
-              <div class="w-full sm:w-1/2">
-                <label class="block text-base mb-1 font-medium text-gray-600">Country</label>
-                <select
-                  v-model="selectedCountry"
-                  @change="fetchStates"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black rounded"
-                >
-                  <option disabled value="">Select a country</option>
-                  <option v-for="country in countries" :key="country.iso2" :value="country.iso2">
-                    {{ country.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="w-full sm:w-1/2">
-                <label class="block text-base mb-1 font-medium text-gray-600">Province / State</label>
-                <select
-                  v-model="selectedState"
-                  class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300 rounded"
-                >
-                  <option disabled value="">Select a province</option>
-                  <option v-for="state in states" :key="state.iso2" :value="state.name">
-                    {{ state.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
+            <!-- Country and State Dropdowns removed -->
 
             <button
               type="submit"
@@ -204,10 +176,6 @@ export default {
         email: '',
         password: ''
       },
-      countries: [],
-      states: [],
-      selectedCountry: '',
-      selectedState: '',
       loginVideo: '/video/Video-register.mp4',
       registerVideo: '/video/Video-register2.mp4',
       showModal: true
@@ -215,43 +183,18 @@ export default {
   },
   methods: {
     submitForm() {
-      if (this.isLogin) {
-        // Handle login logic
-        console.log('Logging in with:', this.form);
-      } else {
-        // Handle registration logic
-        console.log('Registering with:', this.form);
-      }
-    },
-    fetchCountries() {
-      fetch('https://countriesnow.space/api/v0.1/countries/iso')
-        .then(response => response.json())
-        .then(data => {
-          this.countries = data.data;
-        })
-        .catch(error => {
-          console.error("Error fetching countries:", error);
-        });
-    },
-    fetchStates() {
-      if (this.selectedCountry) {
-        fetch('https://countriesnow.space/api/v0.1/countries/states', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ iso2: this.selectedCountry })
-        })
-          .then(response => response.json())
-          .then(data => {
-            this.states = data.data.states;
-          })
-          .catch(error => {
-            console.error("Error fetching states:", error);
-          });
-     
-// ::contentReference[oaicite:16]{index=16}
-        }}}}
+    const user = {
+      fullName: this.form.firstName + ' ' + this.form.lastName,
+      email: this.form.email,
+      phone: this.form.phoneNumber,
+      address: ''
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    this.$emit('registered'); // Notify parent (HeaderPage) to handle redirect
+    this.$emit('close');      // Optional: close modal from parent
+  }
+  }
+}
 </script>
 
 <style>
