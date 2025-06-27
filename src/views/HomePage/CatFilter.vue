@@ -7,8 +7,8 @@
       :class="[
         'border font-bold  px-4 py-2 whitespace-nowrap transition',
         activeCategory === category
-          ? 'bg-black text-white border-black'
-          : 'bg-white text-black border-black hover:bg-pink-100'
+          ? 'bg-pink-500 text-white border-pink-500'
+          : 'bg-white text-black border-pink-500 hover:bg-pink-100'
       ]"
     >
       {{ category }}

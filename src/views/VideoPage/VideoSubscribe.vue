@@ -17,10 +17,10 @@
         <input
           type="email"
           placeholder="ENTER PHONE NUMBER"
-          class="w-full max-w-xs sm:max-w-md md:max-w-lg px-4 py-2 text-black border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black rounded"
+          class="w-full max-w-xs sm:max-w-md md:max-w-lg px-4 py-2 text-black border border-pink-300 focus:outline-none focus:ring-1 focus:ring-pink-600 rounded"
         />
         <button
-          class="bg-black w-full max-w-[180px] text-white py-2 sm:py-3 rounded hover:bg-red-600 transition duration-300"
+          class="bg-white text-black border-dashed border-2 border-pink-600 w-full max-w-[180px] py-2 sm:py-3 rounded hover:bg-pink-600 hover:text-white transition duration-300"
         >
           Subscribe
         </button>

@@ -18,7 +18,7 @@
             <i
               :class="[
                 'pi',
-                isFavorite(slotProps.data) ? 'pi-heart-fill text-red-500' : 'pi-heart text-white'
+                isFavorite(slotProps.data) ? 'pi-heart-fill text-pink-600' : 'pi-heart text-white'
               ]"
             ></i>
           </span>
@@ -48,9 +48,9 @@
               </div>
             </div>
           </router-link>
-          <div class="mb-1 font-bold uppercase text-xs sm:text-base">{{ slotProps.data.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-pink-500">{{ slotProps.data.name }}</div>
           <div>
-            <div class="mt-0 text-sm sm:text-lg">
+            <div class="mt-0 text-sm sm:text-lg text-pink-400">
               ${{ slotProps.data.price?.toFixed(2) }}
             </div>
             <div class="color-selector mt-2">

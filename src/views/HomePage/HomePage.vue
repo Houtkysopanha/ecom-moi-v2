@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="shop-by-cat">
-      <div class="header mt-8">
+      <div class="header mt-8 text-pink-500">
         <p class="text-lg sm:text-2xl font-bold uppercase text-center tracking-wider">
           Shop By Category
         </p>
@@ -24,7 +24,7 @@
       <ImageCarousel />
       <div class="text-center mt-6">
         <p
-          class="inline-block text-lg sm:text-2xl font-medium uppercase tracking-wider border-2 border-black p-2 sm:p-3 hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          class="inline-block text-lg sm:text-2xl font-medium uppercase tracking-wider border-2 border-pink-400 p-2 sm:p-3 hover:bg-pink-500 hover:text-white transition duration-300 ease-in-out"
         >
           Shop By Category
           <i class="pi pi-chevron-right ml-2" style="font-size: 1.2rem;"></i>

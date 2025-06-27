@@ -36,11 +36,11 @@
               </button>
             </div>
           </div>
-          <div class="mb-1 font-bold uppercase text-xs sm:text-base">{{ product.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-pink-500">{{ product.name }}</div>
           <div>
-            <div class="mt-0 text-base sm:text-lg text-red-500">
+            <div class="mt-0 text-base sm:text-lg text-red-500 ">
               ${{ product.priceDiscount?.toFixed(2) }}
-              <span class="text-xs sm:text-sm text-gray-400 line-through">${{ product.price?.toFixed(2) }}</span>
+              <span class="text-xs sm:text-sm text-pink-400 line-through">${{ product.price?.toFixed(2) }}</span>
             </div>
             <div class="color-selector mt-2">
               <div
@@ -59,7 +59,7 @@
     <!-- See More Button -->
     <div v-if="visibleCount < products.length" class="flex justify-center mt-6">
       <button
-        class="px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-pink-600 transition"
+        class="px-6 py-2 border-2 border-dashed border-pink-500 text-black font-semibold hover:bg-pink-600 hover:text-white transition"
         @click="seeMore"
       >
         See More

@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class=" bg-pink-50">
+    <div id="app" class=" bg-white">
         <header>
             <!-- <HeaderPage /> -->
             <!-- <VideoPage /> -->
