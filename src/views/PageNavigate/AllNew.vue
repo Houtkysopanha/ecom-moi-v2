@@ -1,5 +1,6 @@
 <template>
-  <div class="py-6 px-2 sm:px-4 md:px-12">
+  <div class="py-6 px-2 sm:px-4 md:px-12 border-t-4 border-black">
+    <h1 class="text-3xl font-bold text-pink-600 mb-8 text-center">All Products</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
       <div
         v-for="(product, index) in visibleProducts"
@@ -12,15 +13,11 @@
               <img
                 :src="hoveredProduct === product.name ? product.hoverImage : product.image"
                 :alt="product.name"
-                class="w-full h-52 sm:h-64 md:h-72 lg:h-[500px] object-cover"
+                class="w-full h-52 sm:h-64 md:h-72 lg:h-[500px] object-cover rounded"
                 @mouseover="hoveredProduct = product.name"
                 @mouseleave="hoveredProduct = null"
                 @error="onImageError"
               />
-              <!-- Dynamic Promotion Text -->
-              <div v-if="product.promotionText" class="promotion-text1">
-                {{ product.promotionText }}
-              </div>
               <!-- Heart Icon -->
               <Tag
                 :value="''"
@@ -29,20 +26,20 @@
                 style="right: 20px; top: 20px; font-size: 25px; color: white;"
               />
               <!-- Shop Now Button -->
-              <button
-                class="shop-now-btn absolute bottom-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out text-xs sm:text-sm"
+              <router-link
+                :to="`/product/${product.name.replace(/\s+/g, '-').toLowerCase()}`"
+                class="shop-now-btn absolute bottom-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out text-xs sm:text-sm flex items-center justify-center"
               >
                 Shop Now
-              </button>
+              </router-link>
             </div>
           </div>
-          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-white">{{ product.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-gray-900">{{ product.name }}</div>
           <div>
-            <div class="mt-0 text-base sm:text-lg text-red-500 ">
-              ${{ product.priceDiscount?.toFixed(2) }}
-              <span class="text-xs sm:text-sm text-white line-through">${{ product.price?.toFixed(2) }}</span>
+            <div class="mt-0 text-base sm:text-lg text-pink-600 font-bold">
+              ${{ product.price?.toFixed(2) }}
             </div>
-            <div class="color-selector mt-2">
+            <div class="color-selector mt-2" v-if="product.colors && product.colors.length">
               <div
                 v-for="(color, colorIndex) in product.colors"
                 :key="colorIndex"
@@ -73,112 +70,107 @@ import { ref, computed } from "vue";
 import Tag from "primevue/tag";
 
 export default {
-  name: "OnSale",
+  name: "AllNew",
   components: { Tag },
   setup() {
     const products = ref([
       {
-        name: "red hat",
+        name: "Red Hat",
         price: 53.0,
-        priceDiscount: 30.0,
         image: "/images/Onsale1.png",
         hoverImage: "/images/Onsale11.png",
         icon: "pi pi-heart-fill",
-        promotionText: "Promotion 10% Off",
         colors: [
-          { code: "#9B4C82", active: true },
-          { code: "#231F20", active: true },
+          { code: "#9B4C82" },
+          { code: "#231F20" },
         ],
         selectedColorIndex: 0,
       },
       {
-        name: "MINI DRESS BLACK",
+        name: "Mini Dress Black",
         price: 30,
         image: "/images/Onsale2.png",
         hoverImage: "/images/Onsale22.png",
         icon: "pi pi-heart-fill",
-        promotionText: "Limited Time Offer",
+        colors: [
+          { code: "#000000" },
+          { code: "#F5F5F5" },
+        ],
+        selectedColorIndex: 0,
       },
       {
-        name: "bEIGE SANDAL",
+        name: "Beige Sandal",
         price: 70,
         image: "/images/Onsale3.png",
         hoverImage: "/images/Onsale33.png",
         icon: "pi pi-heart-fill",
-        promotionText: "Buy 1 Get 1 Free",
+        colors: [
+          { code: "#F5DEB3" },
+          { code: "#D2B48C" },
+        ],
+        selectedColorIndex: 0,
       },
       {
-        name: "SANDRA SCARF",
+        name: "Sandra Scarf",
         price: 40,
         image: "/images/Onsale4.png",
         hoverImage: "/images/Onsale44.png",
         icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
+        colors: [
+          { code: "#FFC0CB" },
+          { code: "#FFF" },
+        ],
+        selectedColorIndex: 0,
+      },
+       {
+        name: "Red Hat",
+        price: 53.0,
+        image: "/images/Onsale1.png",
+        hoverImage: "/images/Onsale11.png",
+        icon: "pi pi-heart-fill",
+        colors: [
+          { code: "#9B4C82" },
+          { code: "#231F20" },
+        ],
+        selectedColorIndex: 0,
       },
       {
-        name: "SUNGLASSESS",
-        price: 40,
-        image: "/images/Onsale5.png",
-        hoverImage: "/images/Onsale55.png",
+        name: "Mini Dress Black",
+        price: 30,
+        image: "/images/Onsale2.png",
+        hoverImage: "/images/Onsale22.png",
         icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
+        colors: [
+          { code: "#000000" },
+          { code: "#F5F5F5" },
+        ],
+        selectedColorIndex: 0,
       },
       {
-        name: "RED MINI DRESS",
-        price: 40,
-        image: "/images/Onsale6.png",
-        hoverImage: "/images/Onsale66.png",
+        name: "Beige Sandal",
+        price: 70,
+        image: "/images/Onsale3.png",
+        hoverImage: "/images/Onsale33.png",
         icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
+        colors: [
+          { code: "#F5DEB3" },
+          { code: "#D2B48C" },
+        ],
+        selectedColorIndex: 0,
       },
       {
-        name: "mARIA EARRING",
+        name: "Sandra Scarf",
         price: 40,
-        image: "/images/Onsale7.png",
-        hoverImage: "/images/Onsale77.png",
+        image: "/images/Onsale4.png",
+        hoverImage: "/images/Onsale44.png",
         icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
+        colors: [
+          { code: "#FFC0CB" },
+          { code: "#FFF" },
+        ],
+        selectedColorIndex: 0,
       },
-      {
-        name: "PINK SKIRT",
-        price: 40,
-        image: "/images/Onsale8.png",
-        hoverImage: "/images/Onsale88.png",
-        icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
-      },
-      {
-        name: "SUNGLASSESS1",
-        price: 40,
-        image: "/images/Onsale5.png",
-        hoverImage: "/images/Onsale55.png",
-        icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
-      },
-      {
-        name: "RED MINI DRESS2",
-        price: 40,
-        image: "/images/Onsale6.png",
-        hoverImage: "/images/Onsale66.png",
-        icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
-      },
-      {
-        name: "mARIA EARRING3",
-        price: 40,
-        image: "/images/Onsale7.png",
-        hoverImage: "/images/Onsale77.png",
-        icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
-      },
-      {
-        name: "PINK SKIRT4",
-        price: 40,
-        image: "/images/Onsale8.png",
-        hoverImage: "/images/Onsale88.png",
-        icon: "pi pi-heart-fill",
-        promotionText: "30% Off ",
-      },
+      // ...add more products as needed
     ]);
     const hoveredProduct = ref(null);
 
@@ -190,7 +182,6 @@ export default {
     };
     const visibleCount = ref(getInitialVisible());
 
-    // Update visibleCount on resize (optional, for better UX)
     window.addEventListener("resize", () => {
       if (visibleCount.value < products.value.length) {
         visibleCount.value = getInitialVisible();
@@ -241,16 +232,6 @@ export default {
 .color-circle.selected {
   border: 5px double white;
 }
-.promotion-text1 {
-  position: absolute;
-  top: 20px;
-  background-color: rgba(255, 255, 255, 1);
-  opacity: 0.7;
-  color: black;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 5px 5px;
-}
 .shop-now-btn {
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
@@ -260,5 +241,7 @@ export default {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
 }
 </style>

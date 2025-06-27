@@ -1,9 +1,9 @@
 <template>
   <div class="main-page">
     <header>
-      <p class="py-6 px-4 sm:py-10 sm:px-9 text-2xl sm:text-3xl uppercase font-bold">
+      <p class="py-6 px-4 text-pink-500 sm:py-10 sm:px-9 text-2xl sm:text-3xl uppercase font-bold">
         My Wishlist
-        <span class="px-2 sm:px-4 text-lg sm:text-xl font-medium">&lt; {{ favoritesStore.favorites.length }} items &gt;</span>
+        <span class="px-2 sm:px-4 text-lg text-black sm:text-xl font-medium">&lt; {{ favoritesStore.favorites.length }} items &gt;</span>
       </p>
     </header>
 
@@ -20,7 +20,7 @@
           class="absolute top-2 right-2 bg-white rounded-full w-8 h-8 sm:w-[35px] sm:h-[35px] p-1 shadow flex items-center justify-center"
           @click="favoritesStore.removeFavorite(product)"
         >
-          <i class="fa-solid fa-trash"></i>
+          <i class="fa-solid fa-trash text-pink-500"></i>
         </button>
 
         <!-- Image -->
@@ -28,7 +28,7 @@
 
         <!-- Product Info -->
         <div class="p-3 sm:p-4">
-          <div class="font-bold text-base sm:text-lg uppercase">{{ product.name }}</div>
+          <div class="font-bold text-base sm:text-lg uppercase text-pink-400">{{ product.name }}</div>
           <div class="text-gray-700 text-sm sm:text-md border-0 border-b border-black bg-transparent mt-2 p-0">
             USD ${{ product.price }}
           </div>
@@ -43,7 +43,7 @@
 
           <!-- Button -->
           <button
-            class="w-full bg-black text-white mt-4 py-2 text-base sm:text-lg font-semibold rounded"
+            class="w-full bg-pink-400 hover:bg-pink-600 text-white mt-4 py-2 text-base sm:text-lg font-semibold rounded"
             @click="bagStore.addToBag(product)"
           >
             ADD TO MY BAG

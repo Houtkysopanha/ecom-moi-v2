@@ -37,7 +37,7 @@
             <router-link to="/favoritesPage" class="relative">
               <div class="mx-2">
                 <i class="fa-solid fa-heart text-2xl cursor-pointer text-pink-500 hover:text-pink-600"></i>
-                <span v-if="favoritesCount > 0" class="absolute -top-2 left-[75px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"> {{ favoritesCount }} </span>
+                <span v-if="favoritesCount > 0" class="absolute -top-2 left-[20px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"> {{ favoritesCount }} </span>
               </div>
             </router-link>
             
@@ -200,14 +200,14 @@
                 <div class="mx-auto grid grid-cols-2 md:grid-cols-4 gap-5 p-8 ">
                   <div v-for="(col, idx) in menu.items" :key="idx">
                     <h3 class="text-sm font-bold uppercase leading-8">{{ col.header }}</h3>
-                    <a
-                      v-for="item in col.links"
-                      :key="item"
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8 block"
-                    >
-                      {{ item }}
-                    </a>
+                    <router-link
+  v-for="item in col.links"
+  :key="item"
+  :to="getMenuRoute(item)"
+  class="hover:underline hover:text-pink-400 leading-8 block"
+>
+  {{ item }}
+</router-link>
                   </div>
                 </div>
               </div>
@@ -275,8 +275,28 @@ export default {
         { title: "Accessories" },
         { title: "Shoes" },
         { title: "Sale", color: "text-red-600" }
-      ]
+      ],
+      getMenuRoute(item) {
+  // Map menu item names to routes
+  const routeMap = {
+    "All New": "/all-new",
+    "Back in Stock": "/back-in-stock",
+    "New Dresses": "/new-dresses",
+    "New Top": "/new-top",
+    "New Bottom": "/new-bottom",
+    "New Jacket & Sweater": "/new-jacket-sweater",
+    "New Shoes": "/new-shoes",
+    "New Accessories": "/new-accessories",
+    "All Time Favorites": "/all-time-favorites",
+    "Top Rated": "/top-rated",
+    "Most Loved": "/most-loved",
+    "Editor Picks": "/editor-picks"
+    // Add more as needed
+  };
+  return routeMap[item] || "/";
+}
     };
+    
   },
   mounted() {
     this.favoritesStore = this.$pinia?._s?.get('favorites') || { favorites: [] };

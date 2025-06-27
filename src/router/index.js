@@ -8,6 +8,7 @@ const ProductDetail = () => import('../views/Product/ProductDetail.vue')
 const FavouritePage = () => import('../views/Favorites/FavouritePage.vue')
 const CheckOut = () => import('../views/Checkout/CheckOut.vue')
 const UserInformation = () => import('../views/UserInformation/UserInformation.vue') // <-- Add this
+const AllNew = () => import('../views/PageNavigate/AllNew.vue') // 
 
 const routes = [
   {
@@ -45,7 +46,12 @@ const routes = [
         path: '/user-information',
         name: 'UserInformation',
         component: UserInformation,
-      } // <-- Add missing closing brace here
+      },
+      {
+        path: '/all-new',
+        name: 'AllNew',
+        component: AllNew,
+      }
     ]
   }
 ]

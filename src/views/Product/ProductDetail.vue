@@ -70,7 +70,7 @@
       </div>
       <div class="detail flex flex-col md:flex-row flex-1 gap-4 md:gap-5">
         <div class="flex flex-col gap-3 flex-1">
-          <h1 class="text-xl sm:text-2xl md:text-3xl uppercase font-bold break-words">{{ productData?.name || 'Null' }}</h1>
+          <h1 class="text-xl sm:text-2xl md:text-3xl uppercase text-pink-500 font-bold break-words">{{ productData?.name || 'Null' }}</h1>
           <p class="text-base sm:text-lg font-medium">USD ${{ productData?.price?.toFixed(2) || 'Null' }}</p>
           <!-- Color Options -->
           <div>
@@ -118,7 +118,7 @@
   <!-- Complete Your Look -->
   <div class="completeyour-look">
     <div class="header">
-      <p class="text-xl sm:text-2xl font-bold uppercase text-black mt-10 text-center tracking-wider">
+      <p class="text-xl sm:text-4xl font-bold uppercase text-pink-500 mt-10 text-center tracking-wider">
         Complete Your Look
       </p>
     </div>
@@ -127,7 +127,7 @@
   <!-- Similar Style -->
   <div class="similar-style">
     <div class="header">
-      <p class="text-xl sm:text-2xl font-bold uppercase text-black mt-10 text-center tracking-wider">
+      <p class="text-xl sm:text-4xl font-bold uppercase text-pink-500 mt-10 text-center tracking-wider">
         Similar style
       </p>
     </div>
