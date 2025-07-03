@@ -1,6 +1,14 @@
 <template>
-  <div class="max-w-4xl mx-auto mt-20 p-10 bg-white rounded-3xl shadow-2xl">
+  <div class="">
+        <h1 class="text-4xl font-bold md:text-4xl p-6 md:p-8 font-extabold bg-white text-pink-500 border-b-4 border-pink-400 text-center shadow-lg rounded-b-2xl tracking-widest">
+        <router-link to="/" class="text-pink-500 hover:text-pink-600">
+          KANDRA
+        </router-link>
+        </h1>
+    </div>
+  <div class="max-w-4xl mx-auto mt-20 p-10 bg-pink-200 rounded-3xl shadow-2xl">
     <!-- Success Icon & Title -->
+     
     <div class="flex flex-col items-center mb-10">
       <svg class="w-24 h-24 text-pink-500 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"

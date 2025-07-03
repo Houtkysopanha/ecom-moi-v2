@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderPage v-if="!hideHeader" />
+    <HeaderPage v-if="!$route.meta.hideHeader" />
     <router-view />
   </div>
 </template>

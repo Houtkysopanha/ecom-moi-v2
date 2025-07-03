@@ -1,49 +1,67 @@
 <template>
-  <div class="main-page">
-    <header>
-      <p class="py-6 px-4 text-pink-500 sm:py-10 sm:px-9 text-2xl sm:text-3xl uppercase font-bold">
-        My Wishlist
-        <span class="px-2 sm:px-4 text-lg text-black sm:text-xl font-medium">&lt; {{ favoritesStore.favorites.length }} items &gt;</span>
-      </p>
+  <div class="main-page bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b mb-6">
+      <div class=" mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-pink-500 uppercase tracking-wide">
+          My Wishlist
+          <span class="text-lg sm:text-xl text-gray-700 font-medium ml-2">
+            &lt; {{ favoritesStore.favorites.length }} items &gt;
+          </span>
+        </h1>
+      </div>
     </header>
 
-    <div v-if="favoritesStore.favorites.length === 0" class="px-4 sm:px-9 text-gray-400">No favorites yet.</div>
+    <!-- Empty State -->
+    <div v-if="favoritesStore.favorites.length === 0" class="text-center text-gray-400 text-lg mt-20">
+      No favorites yet.
+    </div>
 
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-9">
+    <!-- Wishlist Grid -->
+    <div
+      v-else
+      class="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 sm:px-6 lg:px-8 pb-10"
+    >
       <div
         v-for="product in favoritesStore.favorites"
         :key="product.name"
-        class="border rounded shadow-sm overflow-hidden relative bg-white"
+        class="bg-white border rounded-xl shadow-sm hover:shadow-md transition duration-300 relative"
       >
-        <!-- Delete Icon -->
+        <!-- Delete Button -->
         <button
-          class="absolute top-2 right-2 bg-white rounded-full w-8 h-8 sm:w-[35px] sm:h-[35px] p-1 shadow flex items-center justify-center"
+          class="absolute top-3 right-3 bg-white rounded-full w-9 h-9 shadow flex items-center justify-center hover:bg-pink-100 transition"
           @click="favoritesStore.removeFavorite(product)"
         >
-          <i class="fa-solid fa-trash text-pink-500"></i>
+          <i class="fa-solid fa-trash text-pink-500 text-base"></i>
         </button>
 
-        <!-- Image -->
-        <img :src="product.image" :alt="product.name" class="w-full h-56 sm:h-72 md:h-80 lg:h-[340px] object-cover" />
+        <!-- Product Image -->
+        <img
+          :src="product.image"
+          :alt="product.name"
+          class="w-full h-64 object-cover rounded-t-xl"
+        />
 
         <!-- Product Info -->
-        <div class="p-3 sm:p-4">
-          <div class="font-bold text-base sm:text-lg uppercase text-pink-400">{{ product.name }}</div>
-          <div class="text-gray-700 text-sm sm:text-md border-0 border-b border-black bg-transparent mt-2 p-0">
-            USD ${{ product.price }}
-          </div>
+        <div class="p-4">
+          <h2 class="text-lg sm:text-xl font-semibold text-pink-500 uppercase truncate">
+            {{ product.name }}
+          </h2>
+          <p class="text-gray-800 mt-1 text-sm sm:text-base">USD ${{ product.price }}</p>
 
           <!-- Dropdowns -->
-          <select class="w-full border-0 border-b text-gray-700 border-gray-700 bg-transparent mt-2 p-0 py-1 text-sm sm:text-md">
-            <option>RED</option>
-          </select>
-          <select class="w-full border-0 border-b text-gray-700 border-gray-700 bg-transparent mt-2 p-0 py-1 text-sm sm:text-md">
-            <option>Free size</option>
-          </select>
+          <div class="mt-3 space-y-2">
+            <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
+              <option>RED</option>
+            </select>
+            <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
+              <option>Free size</option>
+            </select>
+          </div>
 
-          <!-- Button -->
+          <!-- Add to Bag Button -->
           <button
-            class="w-full bg-pink-400 hover:bg-pink-600 text-white mt-4 py-2 text-base sm:text-lg font-semibold rounded"
+            class="w-full bg-pink-500 hover:bg-pink-600 text-white mt-4 py-2 rounded-md text-sm sm:text-base font-medium transition"
             @click="bagStore.addToBag(product)"
           >
             ADD TO MY BAG
@@ -57,6 +75,7 @@
 <script setup>
 import { useFavoritesStore } from '../../stores/favorites'
 import { useBagStore } from '../../stores/bag'
+
 const favoritesStore = useFavoritesStore()
 const bagStore = useBagStore()
 </script>

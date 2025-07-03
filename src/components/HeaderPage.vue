@@ -2,48 +2,56 @@
   <div class="main">
     <div class="header-bar">
       <nav class="bg-white">
-        <div class="flex flex-wrap items-center justify-between p-4 md:p-8 shadow-md" style="background-color: #FF92C9;">
-          
-          <!-- Mobile Hamburger -->
-          <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars text-white"></i>
-          </button>
-          
-          <!-- Search Bar -->
-          <div class="relative hidden md:block w-full md:w-[300px] mb-2 md:mb-0">
-            <button
-              class="relative flex items-center w-full h-10 text-sm border-2 border-white hover:border-pink-300 px-4 cursor-pointer pl-8"
-              @click="showSearchModal = true"
-            >
-              <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
-                <i class="fa-solid fa-magnifying-glass text-white"></i>
-              </div>
-              <span v-if="!showSearchModal" class="text-white">Search for...</span>
-            </button>
-          </div>
-          
-          <!-- Logo -->
-          <router-link to="/" class="mx-auto md:mx-0">
-            <div class="logo">
-              <p class="text-4xl text-white font-bold hover:text-pink-600">KANDRA</p>
-            </div>
-          </router-link>
-          
-          <!-- Icons -->
-          <div class="icon-nav flex items-center gap-2 md:gap-4 mt-2 md:mt-0">
-            <i class="fa-solid fa-bag-shopping text-2xl cursor-pointer text-white hover:text-pink-600" @click="showBagDrawer = true"></i>
-            <ShoppingBagDrawer :visible="showBagDrawer" @close="showBagDrawer = false" />
-            
-            <router-link to="/favoritesPage" class="relative">
-              <div class="mx-2">
-                <i class="fa-solid fa-heart text-2xl cursor-pointer text-white hover:text-pink-600"></i>
-                <span v-if="favoritesCount > 0" class="absolute -top-2 left-[20px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"> {{ favoritesCount }} </span>
-              </div>
-            </router-link>
-            
-            <i class="fa-solid fa-user text-2xl cursor-pointer text-white hover:text-pink-600" @click="handleUserIconClick"></i>
-            </div>
+        <div class="relative flex items-center justify-between p-4 md:p-8 shadow-md" style="background-color: #FF92C9;">
+
+  <!-- Left Section: Search on desktop, hamburger on mobile -->
+  <div class="flex items-center">
+    <!-- Mobile Hamburger -->
+    <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl mr-2">
+      <i class="fa-solid fa-bars text-white"></i>
+    </button>
+
+    <!-- Desktop Search Bar -->
+    <div class="hidden md:block w-[250px]">
+      <button
+        class="relative flex items-center w-full h-10 text-sm border-2 border-white hover:border-pink-300 px-4 cursor-pointer pl-8"
+        @click="showSearchModal = true"
+      >
+        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
+          <i class="fa-solid fa-magnifying-glass text-white"></i>
         </div>
+        <span v-if="!showSearchModal" class="text-white">Search for...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Center Section: KANDRA Logo -->
+  <router-link to="/" class="absolute left-1/2 transform -translate-x-1/2">
+    <div class="logo">
+      <p class="text-4xl text-white font-bold hover:border-b-2">KANDRA</p>
+    </div>
+  </router-link>
+
+  <!-- Right Section: Icons -->
+  <div class="flex items-center gap-2 md:gap-4">
+    <i class="fa-solid fa-bag-shopping text-2xl cursor-pointer text-white hover:text-pink-600" @click="showBagDrawer = true"></i>
+    <ShoppingBagDrawer :visible="showBagDrawer" @close="showBagDrawer = false" />
+
+    <router-link to="/favoritesPage" class="relative">
+      <div class="mx-2">
+        <i class="fa-solid fa-heart text-2xl cursor-pointer text-white hover:text-pink-600"></i>
+        <span v-if="favoritesCount > 0" class="absolute -top-2 left-[20px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+          {{ favoritesCount }}
+        </span>
+      </div>
+    </router-link>
+
+    <i class="fa-solid fa-user text-2xl cursor-pointer text-white hover:text-pink-600" @click="handleUserIconClick"></i>
+  </div>
+
+</div>
+
+
      <!-- Mobile Sidebar Menu -->
 
 <div

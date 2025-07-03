@@ -57,6 +57,7 @@ const routes = [
         path: '/track-order',
         name: 'TrackOrder',
         component: TrackOrder,
+        meta: {hideHeader: true} // <-- Add this meta property
       }
     ]
   }

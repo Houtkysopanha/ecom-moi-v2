@@ -216,9 +216,9 @@ function isFavorite(product) {
   return favoritesStore.isFavorite(product);
 }
 
-function onImageError(event) {
-  event.target.src = "/images/placeholder.png";
-}
+// function onImageError(event) {
+//   event.target.src = "/images/placeholder.png";
+// }
 </script>
 
 <style scoped>

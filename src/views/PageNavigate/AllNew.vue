@@ -1,5 +1,26 @@
 <template>
-  <div class="py-6 px-2 sm:px-4 md:px-12 border-t-4 border-black">
+  <div class="py-6 px-2 sm:px-4 md:px-12 ">
+     <div class="relative flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-pink-400 via-pink-300 to-pink-500 rounded-2xl shadow-lg px-6 py-8 mb-10 overflow-hidden">
+      <div class="flex items-center gap-4">
+        <svg class="w-14 h-14 text-white drop-shadow-lg animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-1 tracking-tight">🔥 Summer Sale!</h2>
+          <p class="text-lg md:text-xl text-white font-semibold">Get <span class="font-bold text-yellow-200">10% OFF</span> on all products today only!</p>
+        </div>
+      </div>
+      <div class="mt-6 md:mt-0">
+        <router-link
+          to="/"
+          class="bg-white text-pink-600 hover:bg-pink-100 font-bold px-8 py-3 rounded-full shadow transition text-lg"
+        >
+          Shop Now
+        </router-link>
+      </div>
+      <img src="/images/Banner-Discount.png" alt="Discount Banner" class="absolute right-0 bottom-0 w-40 opacity-20 pointer-events-none hidden md:block" />
+    </div>
     <h1 class="text-3xl font-bold text-pink-600 mb-8 text-center">All Products</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
       <div
