@@ -9,6 +9,7 @@ const FavouritePage = () => import('../views/Favorites/FavouritePage.vue')
 const CheckOut = () => import('../views/Checkout/CheckOut.vue')
 const UserInformation = () => import('../views/UserInformation/UserInformation.vue') // <-- Add this
 const AllNew = () => import('../views/PageNavigate/AllNew.vue') // 
+const TrackOrder = () => import('../views/Checkout/TrackDelivery.vue') // <-- Add this
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
         path: '/all-new',
         name: 'AllNew',
         component: AllNew,
+      },
+      {
+        path: '/track-order',
+        name: 'TrackOrder',
+        component: TrackOrder,
       }
     ]
   }

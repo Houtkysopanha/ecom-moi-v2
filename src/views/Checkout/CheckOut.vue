@@ -222,11 +222,38 @@
           </div>
         </div>
         <div v-if="mobileTab === 'detail' || isDesktop" class="payment-button mt-6">
-          <button
-            class="w-full bg-black text-white text-base sm:text-xl font-semibold py-3 sm:py-4 uppercase hover:bg-pink-600 transition duration-300 rounded"
-          >
-            Pay Now
-          </button>
+         <button
+  class="w-full bg-black text-white text-base sm:text-xl font-semibold py-3 sm:py-4 uppercase hover:bg-pink-600 transition duration-300 rounded"
+  @click="handlePayNow"
+>
+  Pay Now
+</button>
+<!-- Success Modal -->
+<div
+  v-if="showSuccess"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+>
+  <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full flex flex-col items-center">
+    <svg class="w-16 h-16 text-pink-500 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 12l2 2 4-4M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+    </svg>
+    <h2 class="text-2xl font-bold text-pink-600 mb-2">Payment Successful!</h2>
+    <p class="text-gray-500 mb-6 text-center">Thank you for your purchase.<br />You can now track your order.</p>
+    <router-link
+      to="/track-order"
+      class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-bold shadow transition mb-2 w-full text-center"
+    >
+      Track Delivery
+    </router-link>
+    <button
+      @click="showSuccess = false"
+      class="mt-2 text-pink-500 hover:underline"
+    >
+      Close
+    </button>
+  </div>
+</div>
         </div>
       </div>
       <!-- Right Side: Shopping Bag -->
@@ -301,13 +328,18 @@
 <script setup>
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useBagStore } from '../../stores/bag'
-
+import { useRouter } from 'vue-router'
 const paymentTab = ref('credit')
 const mobileTab = ref('shoppingbag') // Show Shopping Bag tab first on mobile
 const bagStore = useBagStore()
 const windowWidth = ref(window.innerWidth)
 const isDesktop = computed(() => windowWidth.value >= 1024)
 
+const showSuccess = ref(false)
+const router = useRouter()
+function handlePayNow() {
+  showSuccess.value = true
+}
 const subtotal = computed(() =>
   bagStore.bag.reduce((sum, product) => sum + (product.price || 0) * (product.quantity || 1), 0)
 )

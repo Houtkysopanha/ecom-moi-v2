@@ -2,46 +2,46 @@
   <div class="main">
     <div class="header-bar">
       <nav class="bg-white">
-        <div class="flex flex-wrap items-center justify-between p-4 md:p-8">
+        <div class="flex flex-wrap items-center justify-between p-4 md:p-8 shadow-md" style="background-color: #FF92C9;">
           
           <!-- Mobile Hamburger -->
           <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars text-white"></i>
           </button>
           
           <!-- Search Bar -->
           <div class="relative hidden md:block w-full md:w-[300px] mb-2 md:mb-0">
             <button
-              class="relative flex items-center w-full h-10 text-sm border-2 border-gray-300 hover:border-pink-300 px-4 cursor-pointer pl-8"
+              class="relative flex items-center w-full h-10 text-sm border-2 border-white hover:border-pink-300 px-4 cursor-pointer pl-8"
               @click="showSearchModal = true"
             >
               <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
-                <i class="fa-solid fa-magnifying-glass text-pink-500"></i>
+                <i class="fa-solid fa-magnifying-glass text-white"></i>
               </div>
-              <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
+              <span v-if="!showSearchModal" class="text-white">Search for...</span>
             </button>
           </div>
           
           <!-- Logo -->
           <router-link to="/" class="mx-auto md:mx-0">
             <div class="logo">
-              <p class="text-4xl text-pink-400 font-bold hover:text-pink-600">KANDRA</p>
+              <p class="text-4xl text-white font-bold hover:text-pink-600">KANDRA</p>
             </div>
           </router-link>
           
           <!-- Icons -->
           <div class="icon-nav flex items-center gap-2 md:gap-4 mt-2 md:mt-0">
-            <i class="fa-solid fa-bag-shopping text-2xl cursor-pointer text-pink-500 hover:text-pink-600" @click="showBagDrawer = true"></i>
+            <i class="fa-solid fa-bag-shopping text-2xl cursor-pointer text-white hover:text-pink-600" @click="showBagDrawer = true"></i>
             <ShoppingBagDrawer :visible="showBagDrawer" @close="showBagDrawer = false" />
             
             <router-link to="/favoritesPage" class="relative">
               <div class="mx-2">
-                <i class="fa-solid fa-heart text-2xl cursor-pointer text-pink-500 hover:text-pink-600"></i>
+                <i class="fa-solid fa-heart text-2xl cursor-pointer text-white hover:text-pink-600"></i>
                 <span v-if="favoritesCount > 0" class="absolute -top-2 left-[20px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"> {{ favoritesCount }} </span>
               </div>
             </router-link>
             
-            <i class="fa-solid fa-user text-2xl cursor-pointer text-pink-500 hover:text-pink-600" @click="handleUserIconClick"></i>
+            <i class="fa-solid fa-user text-2xl cursor-pointer text-white hover:text-pink-600" @click="handleUserIconClick"></i>
             </div>
         </div>
      <!-- Mobile Sidebar Menu -->
@@ -64,7 +64,7 @@
     <div class="flex items-center justify-between p-4 border-b">
       <span class="text-2xl font-bold text-pink-400">KANDRA</span>
       <button @click="mobileMenu = false">
-        <i class="fa-solid fa-xmark text-2xl"></i>
+        <i class="fa-solid fa-xmark text-2xl text-pink-400"></i>
       </button>
     </div>
 
@@ -96,14 +96,15 @@
             <div class="mx-auto grid grid-cols-2 gap-5 p-4">
               <div v-for="(col, cidx) in menu.items" :key="cidx">
                 <h3 class="text-sm font-bold uppercase leading-8">{{ col.header }}</h3>
-                <a
+                <router-link
                   v-for="item in col.links"
                   :key="item"
+                  :to="getMenuRoute(item)"
                   href="#"
                   class="hover:underline hover:text-pink-400 leading-8 block"
                 >
                   {{ item }}
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
@@ -129,16 +130,6 @@
           </div>
         </div>
       </li>
-
-      <!-- Static Menu Item -->
-      <li>
-        <router-link
-          to="/VideoDetail"
-          class="font-bold block py-2 px-2 rounded hover:bg-pink-50 transition"
-        >
-          Video
-        </router-link>
-      </li>
     </ul>
   </aside>
 
@@ -157,7 +148,7 @@
         <span class="text-xl font-bold text-pink-400">Search</span>
       </div>
       <button @click="showSearchModal = false">
-        <i class="fa-solid fa-xmark text-2xl text-gray-500 hover:text-pink-400 transition"></i>
+        <i class="fa-solid fa-xmark text-2xl text-white hover:text-pink-400 transition"></i>
       </button>
     </div>
     <input
@@ -187,7 +178,7 @@
         <div class="mega-menu relative w-full hidden md:block text-pink-500 hover:text-pink-600"
           :class="{ 'hidden': mobileMenu, 'block': !mobileMenu }"
         >
-          <div class="w-full flex flex-wrap items-start gap-4 md:gap-6 px-4 md:px-8">
+          <div class="w-full flex flex-wrap items-start gap-4 md:gap-6 px-4 md:px-8 mt-3">
             <div v-for="menu in menus" :key="menu.title" class="relative group">
               <button class="font-bold uppercase" :class="menu.color">{{ menu.title }}</button>
 
@@ -213,12 +204,6 @@
               </div>
             </div>
             <!-- Static Menu Item -->
-            <router-link to="/VideoDetail">
-              <button class="font-bold uppercase ml-0 md:ml-6 text-pink-500">Video</button>
-            </router-link>
-            <div class="facebook-page">
-              <button class="font-bold uppercase text-pink-500 ml-0 md:ml-6">Facebook-Page</button>
-            </div>
           </div>
         </div>
       </nav>
@@ -274,23 +259,22 @@ export default {
         { title: "Clothing" },
         { title: "Accessories" },
         { title: "Shoes" },
-        { title: "Sale", color: "text-red-600" }
+        { title: "Sale", color: "text-red-600" },
+        { title: "General links", 
+          items: [
+           {
+            header: "General Links",
+            links: [
+              "Video", "Facebook-Page", "Telegram-Channel", "Instagram-Page", "TikTok-Page"
+            ]
+           }
+          ]
+        }
       ],
       getMenuRoute(item) {
   // Map menu item names to routes
   const routeMap = {
     "All New": "/all-new",
-    "Back in Stock": "/back-in-stock",
-    "New Dresses": "/new-dresses",
-    "New Top": "/new-top",
-    "New Bottom": "/new-bottom",
-    "New Jacket & Sweater": "/new-jacket-sweater",
-    "New Shoes": "/new-shoes",
-    "New Accessories": "/new-accessories",
-    "All Time Favorites": "/all-time-favorites",
-    "Top Rated": "/top-rated",
-    "Most Loved": "/most-loved",
-    "Editor Picks": "/editor-picks"
     // Add more as needed
   };
   return routeMap[item] || "/";
@@ -333,7 +317,11 @@ export default {
   onRegistered() {
     this.showModal = false;
     this.$router.push('/user-information');
-  }
+  },
+  closeMobileMenu() {
+  this.mobileMenu = false;
+  this.activeMobileMenu = null;
+}
   },
   computed: {
     filteredSuggestions() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 px-2 sm:px-4 md:px-12">
+  <div class="py-6 px-2 sm:px-4 md:px-12 bg-gradient-to-r from-pink-200 via-pink-100 to-pink-200 mt-10">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
       <div
         v-for="(product, index) in visibleProducts"
@@ -36,11 +36,11 @@
               </button>
             </div>
           </div>
-          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-white">{{ product.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-pink-500">{{ product.name }}</div>
           <div>
             <div class="mt-0 text-base sm:text-lg text-red-500 ">
               ${{ product.priceDiscount?.toFixed(2) }}
-              <span class="text-xs sm:text-sm text-white line-through">${{ product.price?.toFixed(2) }}</span>
+              <span class="text-xs sm:text-sm text-pink-500 line-through">${{ product.price?.toFixed(2) }}</span>
             </div>
             <div class="color-selector mt-2">
               <div

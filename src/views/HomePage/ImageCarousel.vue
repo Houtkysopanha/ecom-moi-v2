@@ -1,11 +1,33 @@
 <template>
   <div class="custom-carousel-container">
+    <!-- Category Tabs -->
+     <div class="header mt-8 text-white ">
+        <p class="text-lg sm:text-4xl font-bold uppercase text-center tracking-wider">
+          Shop By Category
+        </p>
+      </div>
+    <div class="flex flex-wrap md:flex-nowrap gap-2 md:gap-4 justify-center mt-10 overflow-x-auto px-2">
+      <button
+        v-for="(category, index) in categories"
+        :key="index"
+        @click="activeCategory = category"
+        :class="[
+          'border font-bold px-4 py-2 whitespace-nowrap transition',
+          activeCategory === category
+            ? 'bg-pink-500 text-white border-pink-500'
+            : 'bg-white text-black border-pink-500 hover:bg-pink-100'
+        ]"
+      >
+        {{ category }}
+      </button>
+    </div>
+    <!-- Carousel -->
     <Carousel
-      :value="products"
+      :value="filteredProducts"
       :numVisible="numVisible"
-      :numScroll="1"
+      :numScroll="4"
       :responsiveOptions="responsiveOptions"
-      class="custom-carousel"
+      class="custom-carousel bg-gradient-to-r from-pink-200 via-pink-100 to-pink-200 mt-10"
       :style="{ padding: '0.7cm 1.5rem 0cm' }"
     >
       <template #item="slotProps">
@@ -48,30 +70,38 @@
               </div>
             </div>
           </router-link>
-          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-white">{{ slotProps.data.name }}</div>
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base text-pink-500">{{ slotProps.data.name }}</div>
           <div>
-            <div class="mt-0 text-sm sm:text-lg text-white">
+            <div class="mt-0 text-sm sm:text-lg text-pink-500">
               ${{ slotProps.data.price?.toFixed(2) }}
             </div>
-            <div class="color-selector mt-2">
+            <div class="color-selector mt-2" v-if="slotProps.data.colors">
               <div
                 v-for="(color, index) in slotProps.data.colors"
                 :key="index"
                 class="color-circle"
                 :class="{ selected: index === slotProps.data.selectedColorIndex }"
                 :style="{ backgroundColor: color.code }"
-                @click="selectColor(slotProps.data, index)"
+                @click.stop="selectColor(slotProps.data, index)"
               ></div>
             </div>
           </div>
         </div>
       </template>
     </Carousel>
+    <div class="text-center mt-6">
+        <p
+          class="inline-block text-lg sm:text-2xl font-medium uppercase tracking-wider border-2 bg-white border-pink-400 p-2 sm:p-3 hover:bg-pink-500 hover:text-white transition duration-300 ease-in-out"
+        >
+          Shop By Category
+          <i class="pi pi-chevron-right ml-2" style="font-size: 1.2rem;"></i>
+        </p>
+      </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Carousel from "primevue/carousel";
 import { useFavoritesStore } from "../../stores/favorites.js";
 
@@ -85,9 +115,10 @@ const products = ref([
     hoverImage: "/images/Model-RedHat2.png",
     icon: "pi pi-heart-fill",
     video: "/video/Video-hat-red.mp4",
+    category: "Accessories",
     colors: [
-      { code: "#9B4C82", active: true },
-      { code: "#231F20", active: true },
+      { code: "#9B4C82" },
+      { code: "#231F20" },
     ],
     selectedColorIndex: 0,
   },
@@ -97,6 +128,7 @@ const products = ref([
     image: "/images/Model-2.png",
     hoverImage: "/images/Model-22.png",
     icon: "pi pi-heart-fill",
+    category: "Clothing",
   },
   {
     name: "soft plain sweater",
@@ -104,6 +136,7 @@ const products = ref([
     image: "/images/Model-3.png",
     hoverImage: "/images/Model-33.png",
     icon: "pi pi-heart-fill",
+    category: "Clothing",
   },
   {
     name: "zeller top",
@@ -111,6 +144,7 @@ const products = ref([
     image: "/images/Model-4.png",
     hoverImage: "/images/Model-44.png",
     icon: "pi pi-heart-fill",
+    category: "BACK IN STOCK",
   },
   {
     name: "Product 5",
@@ -118,8 +152,39 @@ const products = ref([
     image: "/images/blue-t-shirt.jpg",
     hoverImage: "/images/blue-t-shirt-hover.jpg",
     icon: "pi pi-heart-fill",
+    category: "TOP",
+  },
+   {
+    name: "Product 5",
+    price: 40,
+    image: "/images/blue-t-shirt.jpg",
+    hoverImage: "/images/blue-t-shirt-hover.jpg",
+    icon: "pi pi-heart-fill",
+    category: "DRESS",
+  },
+   {
+    name: "Product 5",
+    price: 40,
+    image: "/images/blue-t-shirt.jpg",
+    hoverImage: "/images/blue-t-shirt-hover.jpg",
+    icon: "pi pi-heart-fill",
+    category: "DRESS",
+  },
+   {
+    name: "Product 5",
+    price: 40,
+    image: "/images/blue-t-shirt.jpg",
+    hoverImage: "/images/blue-t-shirt-hover.jpg",
+    icon: "pi pi-heart-fill",
+    category: "BEST SELLER",
   },
 ]);
+
+const categories = ref([
+  "NEW ARRIVAL",
+  ...Array.from(new Set(products.value.map(p => p.category).filter(Boolean)))
+]);
+const activeCategory = ref("NEW ARRIVAL");
 
 const hoveredProduct = ref(null);
 const numVisible = ref(4);
@@ -129,6 +194,11 @@ const responsiveOptions = ref([
   { breakpoint: "768px", numVisible: 2, numScroll: 1 },
   { breakpoint: "560px", numVisible: 1, numScroll: 1 },
 ]);
+
+const filteredProducts = computed(() => {
+  if (activeCategory.value === "NEW ARRIVAL") return products.value;
+  return products.value.filter(p => p.category === activeCategory.value);
+});
 
 function selectColor(product, index) {
   product.selectedColorIndex = index;

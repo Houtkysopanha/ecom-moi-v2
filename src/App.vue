@@ -17,13 +17,14 @@ const hideHeader = computed(() => route.path.toLowerCase() === '/checkoutpage')
 
 <style>
 ::-webkit-scrollbar {
-  width: 5rem;
-  background: #ec156b;
+  width: 10px;
+  background: #ffe4ef;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ce1072; /* pink-400 */
-  border: 20px solid #ffe4ef;
+  background: #f472b6; 
+  border-radius: 8px;
+  border: 2px solid #ffe4ef;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -32,8 +33,7 @@ const hideHeader = computed(() => route.path.toLowerCase() === '/checkoutpage')
 
 /* For Firefox */
 * {
-  scrollbar-width: 50px;
-  scrollbar-color: #f472b6 #ffe4ef;
-  
+  scrollbar-width: thin;
+  scrollbar-color: rgb( 244, 114, 182) #ffe4ef;
 }
 </style>
