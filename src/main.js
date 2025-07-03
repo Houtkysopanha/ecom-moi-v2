@@ -8,8 +8,13 @@ import primevue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import Carousel from 'primevue/carousel'
 import 'primeicons/primeicons.css';
-
+import { createPinia } from 'pinia';
+import  piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import { MotionPlugin } from '@vueuse/motion'
 const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 app.use(router)
 app.use(primevue, {
     themes: {
@@ -17,5 +22,6 @@ app.use(primevue, {
     },
 });
 app.component('Carousel', Carousel)
+app.use(MotionPlugin)
 app.mount('#app')
 

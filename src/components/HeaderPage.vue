@@ -1,499 +1,217 @@
 <template>
   <div class="main">
     <div class="header-bar">
-      <nav>
-        <div class="search flex mx-auto flex-wrap items-center justify-between" style="padding: 1cm;">
-          <div class="relative hidden md:block">
-            <button
-              class="relative flex items-center w-[300px] h-10 text-sm border-2 border-black px-4 cursor-pointer"
-              style="padding-left: 1cm"
-              @click="showSearchModal = true"
-            >
-              <div
-                style="padding-left: 0.3cm"
-                class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
-              >
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </div>
-              <span v-if="!showSearchModal" class="text-gray-400">Search for...</span>
-            </button>
-          </div>
-          <div class="logo" style="margin-right: 3.5cm">
-            <p class="text-4xl text-pink-400 font-bold">KANDRA</p>
-          </div>
-          <div class="icon-nav flex items-center justify-between">
-            <div>
-              <i class="fa-solid fa-bag-shopping text-2xl"></i>
-            </div>
-            <div class="mx-10">
-              <i
-                class="fa-solid fa-heart text-2xl"
-                style="margin: 0 0.5cm 0 0.5cm"
-              ></i>
-            </div>
-            <div>
-  <i
-    class="fa-solid fa-user text-2xl cursor-pointer"
-    @click="showModal = true"
-  ></i>
-</div>
+      <nav class="bg-white">
+        <div class="relative flex items-center justify-between p-4 md:p-8 shadow-md" style="background-color: #FF92C9;">
 
-          </div>
-        </div>
-        <div
-          v-if="showSearchModal"
-          class="fixed inset-0 flex items-start justify-normal bg-white bg-opacity-50 z-50"
-          @click.self="showSearchModal = false"
-        >
-          <div class="bg-white w-full h-[400px]  rounded-lg">
-            <div class="search flex mx-auto flex-wrap items-center justify-between" style="padding: 1cm;">
-          <div class="relative  hidden md:block">
-            <i  @click="showSearchModal = false" class="fa-solid fa-xmark cursor-pointer" style="font-size: 25px; width: 300px;"></i>
-          </div>
-          <div class="logo "  style="margin-right: 3.5cm">
-            <p class="text-4xl text-pink-400 font-bold">KANDRA</p>
-          </div>
-          <div class="icon-nav flex items-center justify-between">
-            <div>
-              <i class="fa-solid fa-bag-shopping text-2xl"></i>
-            </div>
-            <div class="mx-10">
-              <i
-                class="fa-solid fa-heart text-2xl"
-                style="margin: 0 0.5cm 0 0.5cm"
-              ></i>
-            </div>
-            <div>
-  <i
-    class="fa-solid fa-user text-2xl cursor-pointer"
-    @click="showModal = true"
-  ></i>
-</div>
+  <!-- Left Section: Search on desktop, hamburger on mobile -->
+  <div class="flex items-center">
+    <!-- Mobile Hamburger -->
+    <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl mr-2">
+      <i class="fa-solid fa-bars text-white"></i>
+    </button>
 
-          </div>
-        </div>
-            <div class=" w-[800px] items-center justify-center mx-auto">
-              <input
-              type="text"
-              v-model="searchQuery"
-              placeholder="Type to search..."
-              class="w-full border-2 border-black px-3 py-2 "
-            />
-            <!-- Search Suggestions -->
-            <div class="mt-4">
-              <p class="text-lg font-semibold mb-2">Suggestions:</p>
-              <ul class="space-y-2">
-                <li
-                  v-for="(suggestion, index) in filteredSuggestions"
-                  :key="index"
-                  class="cursor-pointer hover:underline text-pink-500"
-                  @click="selectSuggestion(suggestion)"
-                >
-                  {{ suggestion }}
-                </li>
-              </ul>
-            </div>
-            </div>
-          </div>
-        </div>
-
-       <!-- Modal Wrapper -->
-  <div
-    v-if="showModal"
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-    @click.self="showModal = false"
-  >
-    <!-- Transition container -->
-    <transition name="slide-fade" mode="out-in">
-      <div
-        :key="isLogin"
-        class="bg-white w-[1000px] h-[660px] flex transition-all duration-500 ease-in-out"
-        :class="{ 'flex-row-reverse': !isLogin }"
+    <!-- Desktop Search Bar -->
+    <div class="hidden md:block w-[250px]">
+      <button
+        class="relative flex items-center w-full h-10 text-sm border-2 border-white hover:border-pink-300 px-4 cursor-pointer pl-8"
+        @click="showSearchModal = true"
       >
-        <!-- Video Column -->
-        <div class="w-1/2">
-          <transition name="fade" mode="out-in">
-            <video
-              :key="isLogin ? 'login-video' : 'register-video'"
-              class="w-full h-full object-cover rounded-md"
-              autoplay
-              muted
-              loop
-            >
-              <source
-                :src="isLogin ? loginVideo : registerVideo"
-                type="video/mp4"
-              />
-              Your browser does not support the video tag.
-            </video>
-          </transition>
+        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
+          <i class="fa-solid fa-magnifying-glass text-white"></i>
         </div>
-
-        <!-- Form Column -->
-        <div class="w-1/2 p-6">
-          <!-- Toggle Tabs -->
-          <div class="register-form flex space-x-4 cursor-pointer">
-            <h2
-              @click="isLogin = true"
-              class="text-xl font-bold mb-4"
-              :class="{
-                'text-pink-700 border-b-4 border-pink-700': isLogin,
-                'text-pink-300': !isLogin
-              }"
-            >
-              LOGIN
-            </h2>
-            <h2
-              @click="isLogin = false"
-              class="text-xl font-bold mb-4"
-              :class="{
-                'text-pink-700 border-b-4 border-pink-700': !isLogin,
-                'text-pink-300': isLogin
-              }"
-            >
-              REGISTER
-            </h2>
-          </div>
-
-          <!-- Login or Register Form -->
-          <form @submit.prevent="submitForm">
-        
-            <div v-if="!isLogin" class="mb-4 flex justify-between">
-             <div class="last-name">
-              <label
-                for="lastName"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >First Name</label>
-              <input
-                type="text"
-                id="lastName"
-                placeholder="Enter first name"
-                v-model="form.lastName"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-                required
-              />
-             </div>
-             <div class="last-name">
-              <label
-                for="lastName"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                placeholder="Enter last name"
-                v-model="form.lastName"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-                required
-              />
-             </div>
-            </div>
-            <div class="mb-4">
-              <label
-                for="phoneNumber"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Mobile number</label>
-              <input
-                type="text"
-                id="phoneNumber"
-                placeholder="Enter your phone number"
-                v-model="form.phoneNumber"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-                required
-              />
-            </div>
-
-            <div v-if="!isLogin" class="mb-4">
-              <label
-                for="email"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                v-model="form.email"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-                required
-              />
-            </div>
-
-            <div v-if="isLogin" class="mb-10">
-              <label
-                for="password"
-                class="block text-lg mb-2 font-medium text-gray-600"
-              >Password</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                v-model="form.password"
-                class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-                required
-              />
-            </div>
-          <!-- Country Dropdown -->
-<div v-if="!isLogin" class="flex space-x-5">
-  <div class="mb-4 w-1/2">
-    <label class="block text-lg mb-2 font-medium text-gray-600">Country</label>
-    <select
-      v-model="selectedCountry"
-      @change="fetchStates"
-      class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black "
-    >
-      <!-- <option disabled value="">Select a country</option> -->
-      <option v-for="country in countries" :key="country.iso2" :value="country.iso2">
-        {{ country.name }}
-      </option>
-    </select>
+        <span v-if="!showSearchModal" class="text-white">Search for...</span>
+      </button>
+    </div>
   </div>
 
-  <!-- State/Province Dropdown -->
-  <div class="mb-4 w-1/2">
-    <label class="block text-lg mb-2 font-medium text-gray-600">Province / State</label>
-    <select
-      v-model="selectedState"
-      class="w-full bg-pink-50 border-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black placeholder:text-pink-300"
-    >
-      <!-- <option disabled value="">Select a province</option> -->
-      <option v-for="state in states" :key="state.iso2" :value="state.name">
-        {{ state.name }}
-      </option>
-    </select>
+  <!-- Center Section: KANDRA Logo -->
+  <router-link to="/" class="absolute left-1/2 transform -translate-x-1/2">
+    <div class="logo">
+      <p class="text-4xl text-white font-bold hover:border-b-2">KANDRA</p>
+    </div>
+  </router-link>
+
+  <!-- Right Section: Icons -->
+  <div class="flex items-center gap-2 md:gap-4">
+    <i class="fa-solid fa-bag-shopping text-2xl cursor-pointer text-white hover:text-pink-600" @click="showBagDrawer = true"></i>
+    <ShoppingBagDrawer :visible="showBagDrawer" @close="showBagDrawer = false" />
+
+    <router-link to="/favoritesPage" class="relative">
+      <div class="mx-2">
+        <i class="fa-solid fa-heart text-2xl cursor-pointer text-white hover:text-pink-600"></i>
+        <span v-if="favoritesCount > 0" class="absolute -top-2 left-[20px] bg-pink-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+          {{ favoritesCount }}
+        </span>
+      </div>
+    </router-link>
+
+    <i class="fa-solid fa-user text-2xl cursor-pointer text-white hover:text-pink-600" @click="handleUserIconClick"></i>
   </div>
+
 </div>
 
 
-            <button
-              type="submit"
-              class="px-4 w-full text-lg font-bold py-2 bg-pink-600 text-white hover:bg-pink-500"
-            >
-              {{ isLogin ? 'LOGIN' : 'REGISTER' }}
-            </button>
+     <!-- Mobile Sidebar Menu -->
 
-            <!-- Extra Options -->
-            <div class="text-form">
-              <p v-if="isLogin" class="text-center mt-3 text-gray-600 font-medium">
-                Don't remember your password ?
-              </p>
+<div
+  v-if="mobileMenu"
+  class="fixed inset-0 z-50 flex"
+>
+  <!-- Overlay -->
+  <div
+    class="fixed inset-0 bg-black bg-opacity-40"
+    @click="mobileMenu = false"
+  ></div>
+  <!-- Sidebar -->
+ <aside
+    class="relative bg-white w-4/5 max-w-xs h-full shadow-lg transform transition-transform duration-300 ease-in-out p-0"
+    :class="mobileMenu ? 'translate-x-0' : '-translate-x-full'"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <span class="text-2xl font-bold text-pink-400">KANDRA</span>
+      <button @click="mobileMenu = false">
+        <i class="fa-solid fa-xmark text-2xl text-pink-400"></i>
+      </button>
+    </div>
 
-              <div class="flex items-center my-4">
-                <div class="flex-grow border-t border-gray-300"></div>
-                <span class="px-4 text-gray-600 font-semibold">OR</span>
-                <div class="flex-grow border-t border-gray-300"></div>
+    <!-- Navigation List -->
+    <ul class="p-4 space-y-4">
+      <li
+        v-for="(menu, idx) in menus"
+        :key="menu.title"
+        class="relative group"
+      >
+        <button
+          class="font-bold uppercase w-full text-left flex items-center justify-between"
+          :class="menu.color"
+          @click="toggleMobileMenu(idx)"
+        >
+          {{ menu.title }}
+          <span class="md:hidden ml-2">
+            <i :class="activeMobileMenu === idx ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'"></i>
+          </span>
+        </button>
+
+        <!-- Dropdown Content -->
+        <div>
+          <!-- Mobile dropdown -->
+          <div
+            v-if="windowWidth < 768 && activeMobileMenu === idx && menu.items"
+            class="block w-full border-t-2 border-black bg-white text-black shadow-none z-0"
+          >
+            <div class="mx-auto grid grid-cols-2 gap-5 p-4">
+              <div v-for="(col, cidx) in menu.items" :key="cidx">
+                <h3 class="text-sm font-bold uppercase leading-8">{{ col.header }}</h3>
+                <router-link
+                  v-for="item in col.links"
+                  :key="item"
+                  :to="getMenuRoute(item)"
+                  href="#"
+                  class="hover:underline hover:text-pink-400 leading-8 block"
+                >
+                  {{ item }}
+                </router-link>
               </div>
-
-              <div class="icon-instead flex justify-center mb-5">
-                <i class="fa-brands fa-facebook text-4xl mx-2" style="color: #1d8de2;"></i>
-                <i class="fa-brands fa-telegram text-4xl mx-2" style="color: #74C0FC;"></i>
-              </div>
-
-              <p v-if="isLogin" class="text-center mt-3 text-gray-500 font-medium">
-                New to KANDRA?
-                <span class="text-pink-300 cursor-pointer" @click="isLogin = false">
-                  Register now
-                </span>
-              </p>
-              <p v-if="!isLogin" class="text-center mt-3 text-gray-500 font-medium">
-                Already have an account?
-                <span class="text-pink-300 cursor-pointer" @click="isLogin = true">
-                  Login
-                </span>
-              </p>
             </div>
-          </form>
+          </div>
+
+          <!-- Desktop dropdown -->
+          <div
+            v-else-if="windowWidth >= 768 && menu.items"
+            class="hidden group-hover:block absolute left-0 w-screen border-t-4 border-black bg-white text-black shadow-lg z-50 transition-all"
+          >
+            <div class="mx-auto grid grid-cols-4 gap-5 p-8">
+              <div v-for="(col, cidx) in menu.items" :key="cidx">
+                <h3 class="text-sm font-bold uppercase leading-8">{{ col.header }}</h3>
+                <a
+                  v-for="item in col.links"
+                  :key="item"
+                  href="#"
+                  class="hover:underline hover:text-pink-400 leading-8 block"
+                >
+                  {{ item }}
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+      </li>
+    </ul>
+  </aside>
+
+</div>
+
+       <!-- Search Modal -->
+<div
+  v-if="showSearchModal"
+  class="fixed inset-0 flex items-start p-10 justify-center bg-black bg-opacity-40 z-50"
+  @click.self="showSearchModal = false"
+>
+  <div class="bg-white w-full max-w-[75rem] mx-4 rounded-2xl shadow-xl p-6 animate-fadeIn">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-magnifying-glass text-xl text-pink-400"></i>
+        <span class="text-xl font-bold text-pink-400">Search</span>
       </div>
-    </transition>
+      <button @click="showSearchModal = false">
+        <i class="fa-solid fa-xmark text-2xl text-white hover:text-pink-400 transition"></i>
+      </button>
+    </div>
+    <input
+      type="text"
+      v-model="searchQuery"
+      placeholder="Type to search..."
+      class="w-full border border-gray-300 rounded-full px-5 py-3 text-base focus:outline-none focus:ring-2 focus:ring-pink-300 transition placeholder:text-gray-400"
+      autofocus
+    />
+    <div class="mt-6">
+      <p class="text-base font-semibold mb-2 text-gray-700">Suggestions:</p>
+      <ul class="space-y-2">
+        <li
+          v-for="(suggestion, index) in filteredSuggestions"
+          :key="index"
+          class="cursor-pointer hover:underline hover:text-pink-500 text-pink-400 transition"
+          @click="selectSuggestion(suggestion)"
+        >{{ suggestion }}</li>
+      </ul>
+    </div>
   </div>
+</div>
 
-        <div class="mega-menu" style="margin-top: 0.4cm">
-          <div class="relative w-full flex justify-start items-center" style="padding: 0cm 1cm;">
-            <!-- Mega menu here -->
-            <div class="group">
-              <button class="font-bold uppercase">New Arrivals</button>
+        <!-- Register/Login Modal -->
+<RegisterForm v-if="showModal" @close="showModal = false" @registered="onRegistered" />
+        <!-- Mega Menu -->
+        <div class="mega-menu relative w-full hidden md:block text-pink-500 hover:text-pink-600"
+          :class="{ 'hidden': mobileMenu, 'block': !mobileMenu }"
+        >
+          <div class="w-full flex flex-wrap items-start gap-4 md:gap-6 px-4 md:px-8 mt-3">
+            <div v-for="menu in menus" :key="menu.title" class="relative group">
+              <button class="font-bold uppercase" :class="menu.color">{{ menu.title }}</button>
 
+              <!-- Full-width dropdown -->
               <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
+                v-if="menu.items"
+                class="fixed left-0 w-full border-t-4 border-black bg-white text-black shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50"
+                style="min-height: 250px;"
               >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                  <div class="flex flex-col">
-                    <h3 class="text-sm font-bold uppercase leading-8">
-                      Just in
-                    </h3>
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >All New</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >Back in Stock</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Dresses</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Top</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Bottom</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Jacket & Sweater</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Shoes</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New New Accessories</a
-                    >
+                <div class="mx-auto grid grid-cols-2 md:grid-cols-4 gap-5 p-8 ">
+                  <div v-for="(col, idx) in menu.items" :key="idx">
+                    <h3 class="text-sm font-bold uppercase leading-8">{{ col.header }}</h3>
+                    <router-link
+  v-for="item in col.links"
+  :key="item"
+  :to="getMenuRoute(item)"
+  class="hover:underline hover:text-pink-400 leading-8 block"
+>
+  {{ item }}
+</router-link>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="group" style="margin-left: 1.5cm;">
-              <button class="font-bold uppercase">bestseller</button>
-
-              <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
-              >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                  <div class="flex flex-col">
-                    <h3 class="text-sm font-bold uppercase leading-8">
-                      Just in
-                    </h3>
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >All New</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >Back in Stock</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Dresses</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Top</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Bottom</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Jacket & Sweater</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New Shoes</a
-                    >
-                    <a
-                      href="#"
-                      class="hover:underline hover:text-pink-400 leading-8"
-                      >New New Accessories</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="group" style="margin-left: 1.5cm;">
-              <button class="font-bold uppercase">clothing</button>
-
-              <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
-              >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                <!-- write list down -->
-                </div>
-              </div>
-            </div>
-            <div class="group" style="margin-left: 1.5cm;">
-              <button class="font-bold uppercase">Accessories</button>
-
-              <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
-              >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                <!-- write list down -->
-                </div>
-              </div>
-            </div>
-
-            <div class="group" style="margin-left: 1.5cm;">
-              <button class="font-bold uppercase">shoes</button>
-
-              <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
-              >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                <!-- write list down -->
-                </div>
-              </div>
-            </div>
-
-            <div class="group" style="margin-left: 1.5cm;">
-              <button class="font-bold uppercase text-red-600">sale</button>
-
-              <div
-                style="margin-top: 0.2cm"
-                class="hidden group-hover:flex flex-col absolute left-0 z-10 w-full border-t-4 border-black text-black duration-300 before:content-[''] before:absolute before:top-[-16px] before:left-10 before:border-8 before:border-transparent before:border-b-black"
-              >
-                <div
-                  class="grid grid-cols-2 md:grid-cols-4 gap-5 bg-white"
-                  style="padding: 1cm"
-                >
-                <!-- write list down -->
-                </div>
-              </div>
-            </div>
-
-
+            <!-- Static Menu Item -->
           </div>
         </div>
       </nav>
@@ -502,124 +220,140 @@
 </template>
 
 <script>
+import ShoppingBagDrawer from "../views/BagShopping/ShoppingBagDrawer.vue";
+import RegisterForm from './RegisterForm.vue';
+
 export default {
   name: "HeaderPage",
+  components: { ShoppingBagDrawer, RegisterForm },
   data() {
     return {
-      showModal: true,
+      showModal: false,
       showSearchModal: false,
+      mobileMenu: false,
       searchQuery: "",
+      favoritesStore: null,
+      showBagDrawer: false,
+      activeMobileMenu: null,
+      windowWidth: window.innerWidth,
       suggestions: [
-        "New Arrivals",
-        "Best Sellers",
-        "Dresses",
-        "Shoes",
-        "Accessories",
-        "Sale Items",
-        "Jackets",
-        "Sweaters",
+        "New Arrivals", "Best Sellers", "Dresses", "Shoes",
+        "Accessories", "Sale Items", "Jackets", "Sweaters"
       ],
-      isLogin: true,
-      form: {
-        phoneNumber: "",
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-      },
-      countries: [],
-      states: [],
-      selectedCountry: "",
-      selectedState: "",
-      loginVideo: "/video/Video-register.mp4",
-      registerVideo: "/video/Video-register2.mp4",
-      isLoadingCountries: false,
-      isLoadingStates: false,
+      menus: [
+        {
+          title: "New Arrivals",
+          items: [
+            {
+              header: "Just in",
+              links: [
+                "All New", "Back in Stock", "New Dresses", "New Top",
+                "New Bottom", "New Jacket & Sweater", "New Shoes", "New Accessories"
+              ]
+            }
+          ]
+        },
+        {
+          title: "Bestseller",
+          items: [
+            {
+              header: "Popular Picks",
+              links: [
+                "All Time Favorites", "Top Rated", "Most Loved", "Editor Picks"
+              ]
+            }
+          ]
+        },
+        { title: "Clothing" },
+        { title: "Accessories" },
+        { title: "Shoes" },
+        { title: "Sale", color: "text-red-600" },
+        { title: "General links", 
+          items: [
+           {
+            header: "General Links",
+            links: [
+              "Video", "Facebook-Page", "Telegram-Channel", "Instagram-Page", "TikTok-Page"
+            ]
+           }
+          ]
+        }
+      ],
+      getMenuRoute(item) {
+  // Map menu item names to routes
+  const routeMap = {
+    "All New": "/all-new",
+    // Add more as needed
+  };
+  return routeMap[item] || "/";
+}
     };
+    
   },
   mounted() {
-    this.fetchCountries();
+    this.favoritesStore = this.$pinia?._s?.get('favorites') || { favorites: [] };
+    window.addEventListener('resize', this.updateWindowWidth);
+    
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.updateWindowWidth);
   },
   methods: {
+    toggleMobileMenu(idx) {
+      if (this.windowWidth < 768) {
+        this.activeMobileMenu = this.activeMobileMenu === idx ? null : idx;
+      }
+      
+    },
+    updateWindowWidth() {
+      this.windowWidth = window.innerWidth;
+    },
     selectSuggestion(suggestion) {
       this.searchQuery = suggestion;
-      console.log("Selected suggestion:", suggestion);
-      this.showSearchModal = false; // Close the modal after selecting a suggestion
+      this.showSearchModal = false;
     },
-    async fetchCountries() {
-      this.isLoadingCountries = true;
-      try {
-        const response = await fetch("https://api.countrystatecity.in/v1/countries", {
-          headers: {
-  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
+  handleUserIconClick() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      // If logged in, go to user info page
+      this.$router.push('/user-information');
+    } else {
+      // If not logged in, show modal popup
+      this.showModal = true;
+    }
+  },
+  onRegistered() {
+    this.showModal = false;
+    this.$router.push('/user-information');
+  },
+  closeMobileMenu() {
+  this.mobileMenu = false;
+  this.activeMobileMenu = null;
 }
-        });
-        const data = await response.json();
-        this.countries = data;
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      } finally {
-        this.isLoadingCountries = false;
-      }
-    },
-    async fetchStates() {
-      if (!this.selectedCountry) return;
-
-      this.isLoadingStates = true;
-      try {
-        const response = await fetch(
-          `https://api.countrystatecity.in/v1/countries/${this.selectedCountry}/states`,
-          {
-            headers: {
-  "X-CSCAPI-KEY": "a1b2c3d4e5f6g7h8i9j0" // your real API key here
-}
-          }
-        );
-        const data = await response.json();
-        this.states = data;
-      } catch (error) {
-        console.error("Error fetching states:", error);
-      } finally {
-        this.isLoadingStates = false;
-      }
-    },
-    computed: {
+  },
+  computed: {
     filteredSuggestions() {
       if (!this.searchQuery) return this.suggestions;
-      return this.suggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(this.searchQuery.toLowerCase())
+      return this.suggestions.filter(s =>
+        s.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
-  },
-    submitForm() {
-      if (this.isLogin) {
-        console.log("Logging in:", this.form);
-      } else {
-        console.log("Registering:", this.form);
-      }
-      this.showModal = false;
-    },
-  },
+    favoritesCount() {
+      return this.favoritesStore && this.favoritesStore.favorites
+        ? this.favoritesStore.favorites.length
+        : 0;
+    }
+  }
 };
 </script>
 
-<style>
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all 0.5s ease;
+<style scoped>
+/* No additional CSS needed — Tailwind handles layout */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
 }
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: translateX(50px);
-}
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.4s ease;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(.4,0,.2,1);
 }
 </style>

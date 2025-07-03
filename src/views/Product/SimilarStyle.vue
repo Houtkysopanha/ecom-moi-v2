@@ -5,18 +5,18 @@
       :numVisible="numVisible"
       :numScroll="1"
       :responsiveOptions="responsiveOptions"
-      style="padding: 0.7cm 3cm 0cm"
       class="custom-carousel"
+      :style="{ padding: '0.7cm 1.5rem 0cm' }"
     >
       <template #item="slotProps">
-        <div class="m-4">
+        <div class="m-2 sm:m-4">
           <router-link :to="{ name: 'ProductDetail', params: { productName: slotProps.data.name }, query: { data: JSON.stringify(slotProps.data) } }">
             <div class="mb-2">
               <div class="items relative mx-auto group">
                 <img
                   :src="hoveredProduct === slotProps.data.name ? slotProps.data.hoverImage : slotProps.data.image"
                   :alt="slotProps.data.name"
-                  class="w-full h-[500px] object-cover"
+                  class="w-full h-56 sm:h-72 md:h-96 lg:h-[500px] object-cover rounded transition"
                   @mouseover="hoveredProduct = slotProps.data.name"
                   @mouseleave="hoveredProduct = null"
                   @error="onImageError"
@@ -29,7 +29,7 @@
                   style="right: 20px; top: 20px; font-size: 25px; color: white;"
                 />
                 <button
-                  class="shop-now-btn absolute bottom-0.5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
+                  class="shop-now-btn absolute bottom-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out text-xs sm:text-sm"
                 >
                   Shop Now
                 </button>
@@ -37,9 +37,9 @@
             </div>
           </router-link>
 
-          <div class="mb-1 font-bold uppercase">{{ slotProps.data.name }}</div>
-          <div class="">
-            <div class="mt-0 text-lg">
+          <div class="mb-1 font-bold uppercase text-xs sm:text-base">{{ slotProps.data.name }}</div>
+          <div>
+            <div class="mt-0 text-base sm:text-lg">
               ${{ slotProps.data.price?.toFixed(2) }}
             </div>
             <div class="color-selector mt-2">
